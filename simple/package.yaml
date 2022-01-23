@@ -1,0 +1,26 @@
+spec-version: 0.31.0
+
+<<: !include "../hpack/definitions.yaml"
+
+<<: *meta
+name: nyan-interpolation-simple
+synopsis: Simplified lightweight interpolation
+description:
+  This is a variation of 'nyan-interpolation' library that has no `haskell-src-exts`
+  dependency, at the cost of not being able to interpolate arbitrary exressions,
+  only variables.
+
+extra-source-files: []
+
+default-extensions: *default-extensions
+ghc-options: *ghc-options
+
+dependencies:
+  - base <4.15
+  - nyan-interpolation-core
+  - text
+
+library:
+  <<: *lib-common
+  generated-other-modules:
+    - Paths_nyan_interpolation_simple

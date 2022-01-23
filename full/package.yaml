@@ -1,0 +1,38 @@
+spec-version: 0.31.0
+
+<<: !include "../hpack/definitions.yaml"
+
+<<: *meta
+name: nyan-interpolation
+synopsis: Flexible production-scale string interpolation library
+description:
+  Interpolation library tuneable to your project and your best practices.
+  It supports custom rendering (via Buildable, Show), numerious modification options (like spaces and indentation stripping), and more.
+
+extra-source-files: []
+
+default-extensions: *default-extensions
+ghc-options: *ghc-options
+
+dependencies:
+  - base <4.15
+  - fmt  # need a direct dep to link things in haddock
+  - haskell-src-exts
+  - haskell-src-meta
+  - nyan-interpolation-core
+  - template-haskell
+  - text
+
+library:
+  <<: *lib-common
+  generated-other-modules:
+    - Paths_nyan_interpolation_full
+
+tests:
+  nyan-interpolation-tests:
+    <<: *test-common
+    dependencies:
+      - HUnit
+      - nyan-interpolation
+      - tasty
+      - tasty-hunit-compat

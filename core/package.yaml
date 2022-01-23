@@ -1,0 +1,38 @@
+spec-version: 0.31.0
+
+<<: !include "../hpack/definitions.yaml"
+
+<<: *meta
+name: nyan-interpolation-core
+synopsis: Customize your nyan interpolator!
+description: This package to tune up your own variation of interpolator.
+  Declare new rendering modes, set desired switches defaults and more.
+
+extra-source-files:
+  - CHANGES.md
+
+default-extensions: *default-extensions
+ghc-options: *ghc-options
+
+dependencies:
+  - base <4.15
+  - fmt
+  - megaparsec
+  - mtl
+  - vector
+  - text
+  - template-haskell
+
+library:
+  <<: *lib-common
+  generated-other-modules:
+    - Paths_nyan_interpolation
+
+tests:
+  nyan-interpolation-core-tests:
+    <<: *test-common
+    dependencies:
+      - HUnit
+      - nyan-interpolation-core
+      - tasty
+      - tasty-hunit-compat

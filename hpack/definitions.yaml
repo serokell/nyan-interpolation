@@ -1,0 +1,74 @@
+# This file defines sensible defaults but does not actually apply
+# any of them, so it can be safely included.
+
+_definitions:
+  _top-level:
+    - &meta
+      version: 0.9
+      github: serokell/nyan-interpolation
+      license: MPL-2.0
+      license-file: LICENSE
+      author: Serokell
+      maintainer: Serokell <hi@serokell.io>
+      copyright: 2022 Serokell <https://serokell.io>
+      category: Interpolation, Text
+
+    - &default-extensions
+      - AllowAmbiguousTypes
+      - BangPatterns
+      - BlockArguments
+      - ConstraintKinds
+      - DataKinds
+      - DefaultSignatures
+      - DeriveDataTypeable
+      - DeriveGeneric
+      - DerivingStrategies
+      - FlexibleContexts
+      - FlexibleInstances
+      - FunctionalDependencies
+      - GeneralizedNewtypeDeriving
+      - LambdaCase
+      - MultiParamTypeClasses
+      - MultiWayIf
+      - NamedFieldPuns
+      - OverloadedStrings
+      - RankNTypes
+      - RecordWildCards
+      - ScopedTypeVariables
+      - StandaloneDeriving
+      - TemplateHaskell
+      - TupleSections
+      - TypeFamilies
+      - UndecidableInstances
+      - ViewPatterns
+      - TypeApplications
+      - TypeOperators
+      - QuasiQuotes
+
+    - &ghc-options
+      - -Weverything
+      - -Wno-missing-export-lists
+      - -Wno-missing-exported-signatures
+      - -Wno-missing-import-lists
+      - -Wno-missed-specialisations
+      - -Wno-all-missed-specialisations
+      - -Wno-unsafe
+      - -Wno-safe
+      - -Wno-missing-local-signatures
+      - -Wno-monomorphism-restriction
+      - -Wno-implicit-prelude
+      - -Wno-prepositive-qualified-module
+      - -Wno-missing-safe-haskell-mode
+      - -Wno-unused-packages
+
+  _utils:
+    # Additional options, they will be merged with the ones above when both
+    # are imported.
+
+    - &lib-common
+      source-dirs: src
+
+    - &test-common
+      main: Main.hs
+      source-dirs: tests
+      build-tools: tasty-discover:tasty-discover
