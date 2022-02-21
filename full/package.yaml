@@ -26,7 +26,7 @@ dependencies:
 library:
   <<: *lib-common
   generated-other-modules:
-    - Paths_nyan_interpolation_full
+    - Paths_nyan_interpolation
 
 tests:
   nyan-interpolation-tests:

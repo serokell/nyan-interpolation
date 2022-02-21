@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 82312d9ea614274b42b21490f018c2b6a6f905f8473bf57900bb5d85ee3117fe
+-- hash: d7bdab01e5bca79d0df2d7d3f539908dabd879f2bfc7706bd8da73a7b438387a
 
 name:           nyan-interpolation-core
 version:        0.9
@@ -39,9 +39,8 @@ library
       Text.Interpolation.Nyan.RModes.Show
   other-modules:
       Paths_nyan_interpolation_core
-      Paths_nyan_interpolation
   autogen-modules:
-      Paths_nyan_interpolation
+      Paths_nyan_interpolation_core
   hs-source-dirs:
       src
   default-extensions: AllowAmbiguousTypes BangPatterns BlockArguments ConstraintKinds DataKinds DefaultSignatures DeriveDataTypeable DeriveGeneric DerivingStrategies FlexibleContexts FlexibleInstances FunctionalDependencies GeneralizedNewtypeDeriving LambdaCase MultiParamTypeClasses MultiWayIf NamedFieldPuns OverloadedStrings RankNTypes RecordWildCards ScopedTypeVariables StandaloneDeriving TemplateHaskell TupleSections TypeFamilies UndecidableInstances ViewPatterns TypeApplications TypeOperators QuasiQuotes
