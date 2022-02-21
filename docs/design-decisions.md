@@ -1,3 +1,9 @@
+<!--
+-- SPDX-FileCopyrightText: 2022 Serokell <https://serokell.io/>
+--
+-- SPDX-License-Identifier: MPL-2.0
+-->
+
 # Design decisions
 
 ### Making switches as part of the quoter (`int`) vs. as part of the text in quasi quotation

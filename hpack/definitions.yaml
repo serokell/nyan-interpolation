@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2022 Serokell <https://serokell.io/>
+#
+# SPDX-License-Identifier: MPL-2.0
+
 # This file defines sensible defaults but does not actually apply
 # any of them, so it can be safely included.
 

@@ -1,4 +1,17 @@
+<!--
+-- SPDX-FileCopyrightText: 2022 Serokell <https://serokell.io/>
+--
+-- SPDX-License-Identifier: MPL-2.0
+-->
+
 # Nyan-interpolation
+
+[![License: MPL 2.0](https://img.shields.io/badge/License-MPL%202.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0)
+[![GitHub CI](https://github.com/serokell/nyan-interpolation/workflows/CI/badge.svg)](https://github.com/serokell/nyan-interpolation/actions)
+
+[![nyan-interpolation](https://badgen.net/hackage/v/nyan-interpolation?color=purple)](https://hackage.haskell.org/package/nyan-interpolation)
+[![nyan-interpolation-core](https://badgen.net/hackage/v/nyan-interpolation-core?color=cyan)](https://hackage.haskell.org/package/nyan-interpolation-core)
+[![nyan-interpolation-simple](https://badgen.net/hackage/v/nyan-interpolation-simple?color=green)](https://hackage.haskell.org/package/nyan-interpolation-simple)
 
 Flexible production-scale string interpolation library.
 
@@ -15,7 +28,7 @@ We wanted a solution that would
   - It is still possible to use `Show` as default;
   - Default set of switches can be changed to suit your preferences.
 
-## How to use
+## How To Use
 
 The usage looks like:
 
@@ -38,3 +51,20 @@ myMultilineText =
 ```
 
 The full introduction can be found in the haddock documentation.
+
+## IDE Integration
+
+### VSCode
+
+We provide [snippets](/ide/vscode/int.code-snippets), and syntax highlighting is yet to be implemented (see #3).
+
+## For Contributors
+
+Please see [CONTRIBUTING.md](/.github/CONTRIBUTING.md) for more information.
+
+## About Serokell
+
+Nyan-interpolation is maintained and funded with ❤️ by [Serokell](https://serokell.io/).
+The names and logo for Serokell are trademark of Serokell OÜ.
+
+We love open source software! See [our other projects](https://serokell.io/community?utm_source=github) or [hire us](https://serokell.io/hire-us?utm_source=github) to design, develop and grow your idea!

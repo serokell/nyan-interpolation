@@ -1,3 +1,7 @@
+-- SPDX-FileCopyrightText: 2022 Serokell <https://serokell.io/>
+--
+-- SPDX-License-Identifier: MPL-2.0
+
 {- | Flexible interpolation quoter.
 
 This works exactly like the quoter in `nyan-interpolation` library, with the

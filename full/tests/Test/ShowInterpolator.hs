@@ -1,3 +1,7 @@
+-- SPDX-FileCopyrightText: 2022 Serokell <https://serokell.io/>
+--
+-- SPDX-License-Identifier: MPL-2.0
+
 -- | Tests on interpolator with Show-oriented rendering modes.
 module Test.ShowInterpolator where
 

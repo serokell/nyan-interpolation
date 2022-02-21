@@ -1,7 +1,10 @@
+// SPDX-FileCopyrightText: 2022 Serokell <https://serokell.io/>
+//
+// SPDX-License-Identifier: MPL-2.0
+//
 // Snippets for VSCode that enable quick insertion of interpolation quasi quote.
 {
 	"Insert an interpolator": {
-		"scope": "haskell",
 		"prefix": "int",
 		"body": [
 			"[int||$0|]"
@@ -9,7 +12,6 @@
 		"description": "Insert string interpolator"
 	},
 	"Insert a multiline interpolator": {
-		"scope": "haskell",
 		"prefix": "intm",
 		"body": [
 			"[int||",

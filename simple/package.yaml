@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2022 Serokell <https://serokell.io/>
+#
+# SPDX-License-Identifier: MPL-2.0
+
 spec-version: 0.31.0
 
 <<: !include "../hpack/definitions.yaml"

@@ -1,3 +1,7 @@
+-- SPDX-FileCopyrightText: 2022 Serokell <https://serokell.io/>
+--
+-- SPDX-License-Identifier: MPL-2.0
+
 {- | Core of the @nyan-interpolation@ library.
 
 Use it to define your own variation of the interpolator,
