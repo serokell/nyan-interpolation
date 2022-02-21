@@ -52,6 +52,12 @@ myMultilineText =
 
 The full introduction can be found in the haddock documentation.
 
+## IDE Integration
+
+### VSCode
+
+We provide [snippets](/ide/vscode/int.code-snippets), and syntax highlighting is yet to be implemented (see #3).
+
 ## For Contributors
 
 Please see [CONTRIBUTING.md](/.github/CONTRIBUTING.md) for more information.
