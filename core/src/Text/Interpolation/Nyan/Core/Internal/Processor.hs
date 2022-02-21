@@ -1,3 +1,7 @@
+-- SPDX-FileCopyrightText: 2022 Serokell <https://serokell.io/>
+--
+-- SPDX-License-Identifier: MPL-2.0
+
 module Text.Interpolation.Nyan.Core.Internal.Processor where
 
 import Control.Monad (guard)

@@ -1,3 +1,7 @@
+-- SPDX-FileCopyrightText: 2022 Serokell <https://serokell.io/>
+--
+-- SPDX-License-Identifier: MPL-2.0
+
 {- | Exports the default interpolator + Show-oriented rendering modes
 
 >>> data Ty = Ty { val :: Int }

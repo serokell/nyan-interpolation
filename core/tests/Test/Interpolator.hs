@@ -1,3 +1,7 @@
+-- SPDX-FileCopyrightText: 2022 Serokell <https://serokell.io/>
+--
+-- SPDX-License-Identifier: MPL-2.0
+
 -- | Tests on the interpolator in overall.
 module Test.Interpolator where
 

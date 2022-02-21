@@ -1,3 +1,7 @@
+-- SPDX-FileCopyrightText: 2022 Serokell <https://serokell.io/>
+--
+-- SPDX-License-Identifier: MPL-2.0
+
 -- | Common additional rendering modes like the ones for numbers.
 module Text.Interpolation.Nyan.RModes.CommonExtra where
 

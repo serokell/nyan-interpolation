@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2022 Serokell <https://serokell.io/>
+//
+// SPDX-License-Identifier: MPL-2.0
+//
 // Snippets for VSCode that enable quick insertion of interpolation quasi quote.
 {
 	"Insert an interpolator": {

@@ -1,3 +1,9 @@
+<!--
+-- SPDX-FileCopyrightText: 2022 Serokell <https://serokell.io/>
+--
+-- SPDX-License-Identifier: MPL-2.0
+-->
+
 Our style guides can be found in [the respective repository](https://github.com/serokell/style).
 
 We make a step away from those guidelines as described below.
