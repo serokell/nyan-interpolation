@@ -12,7 +12,7 @@ on:
     branches: [master]
 
 jobs:
-  stack:
+  haskell:
     name: GHC ${{ matrix.ghc }}
     runs-on: ubuntu-latest
     strategy:
@@ -50,5 +50,9 @@ jobs:
       run: |
         stack test --system-ghc --ghc-options '-Werror'
 
-    - name: REUSE Compliance Check
+  reuse:
+    name: REUSE Compliance Check
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check
       uses: fsfe/reuse-action@v1
