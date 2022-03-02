@@ -125,6 +125,22 @@ So `A` and `Z` seemed more clear.
 
 @martoon
 
+### Why `m` switch is necessary?
+
+This is an experimental feature, and I'm not sure whether it will be useful, in fact it may turn out to only encourage bad practices.
+Let's see.
+
+One reasoning is that, the user may want to use explicit values lookup, i.e. be able to pick not all the values available in Haskell scope (that can come from any let-binding, even from a global scope), rather explicitly pass the necessary values under specific names into the interpolator, and then fetch them from within the interpolator respectively. This can be easily (well, relatively easily) achieved with the monadic switch, the user will write something like:
+```hs
+txt = [explicitint||Values are #{value1} and #{value2}|] $
+        subs (#value1 := 5) (#value2 := 10)
+
+-- Assuming that `explicitint` is set up with:
+-- * `m` switch enabled by default
+-- * `valuesInterpolator` expanding values to `lookup #value`
+-- * `subs` constructing a map with type-level keys
+```
+
 ### Why there is no switch for returning `String`?
 
 Arbitrary use of `String` for such purposes is not a good practice.

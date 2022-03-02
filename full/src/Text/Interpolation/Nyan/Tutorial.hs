@@ -8,12 +8,14 @@
 {- | Tutorial on the nyan-interpolation.
 
 >>> import Nyan.Interpolation
->>> let who = "world" in [int||Hello #{who}!|]
+>>>
+>>> let who = "world"
+>>> in [int||Hello #{who}!|]
 "Hello world!"
 
-Variables can be inserted using @{ ... }@ syntax.
+Variables can be inserted using @#{ ... }@ syntax.
 
-For the meaning of two @||@ after @int@, see the Switches section.
+For the meaning of two @||@ after @int@, see the [Switches](#switches) section.
 
 Defaults are:
 
@@ -52,8 +54,7 @@ We refer to the text immediately following the @#@ sign as to /rendering mode/.
 
 Rules for rendering modes are not fixed and depend on the imported interpolation module.
 If you don't like 'Buildable' and prefer the conventional 'Show' typeclass,
-"Text.Interpolation.Nyan.RModes.Show" will provide you with necessary rendering modes
-(to prevent collisions, import only 'int' interpolator itself from "Text.Interpolation.Nyan").
+"Text.Interpolation.Nyan.Show" module is your choice.
 
 Also, you can define your own rules for rendering modes as described in [Adding custom rendering modes](#custom-rendering-modes) section.
 
@@ -84,6 +85,8 @@ Finally, slash itself is also subject to escaping.
 " My code: \s "
 
 
+#switches#
+
 == Switches
 
 Interpolated text starts from the swithes section.
@@ -103,11 +106,13 @@ Trims space-like characters around the text.
 >>> [int|s| The text  |]
 "The text"
 
+Newlines are affected too:
+
 >>> :{
   [int|s|
+<BLANKLINE>
     My text
-    <BLANKLINE>
-    <BLANKLINE>
+<BLANKLINE>
   |]
 :}
 "My text"
@@ -220,7 +225,7 @@ The quoter will return any type with t'FromBuilder' instance.
 
 ==== ! (preview)
 
-Quoter will show as an error (non-blocking for the module's build) how the
+Quoter will show as an error (non-blocking for the module's build) showing how the
 resulting text looks like with all the enabled switches
 (but without substitutions).
 
@@ -254,7 +259,7 @@ affects indentation stripping to also ignore the line with @|]@:
   |]  -- this is safe, minimal detected indentation is still 2
 :}
 
-* Newlines reduction is applied additionally to leading newline stripping:
+* Newlines reduction (@n@) is applied additionally to leading newline stripping (@a@):
 
 >>> :{
   [int|n|
@@ -268,7 +273,17 @@ affects indentation stripping to also ignore the line with @|]@:
 "\nValue 1 is 5, value 2 is 10\n"
 
 
-=== Changing default switches
+=== Customizing the interpolator
+
+There are two main vectors of customization:
+
+* Changing the quasi-quoter, this includes default switches set, how values are interpolated, e.t.c.
+* Editing available rendering modes.
+
+The source of "Text.Interpolation.Nyan" can be a good example of grouping those
+to provide a ready-for-use interpolator.
+
+==== Changing default switches
 
 You can use 'mkInt' to supply the desired set of default switches and thus create your own interpolator for the project-wide use.
 
@@ -276,7 +291,7 @@ You can use 'mkInt' to supply the desired set of default switches and thus creat
 import Text.Interpolation.Nyan.Core
 
 int :: QuasiQuoter
-int = 'mkInt' defaultInterpolationOptions
+int = mkInt defaultInterpolationOptions
   { switchesOptions = basicDefaultSwitchesOptions
     { spacesTrimming = True
     , returnType = ConcreteText
@@ -291,9 +306,10 @@ int = 'mkInt' defaultInterpolationOptions
 [int|SdB| My text |]
 @
 
+
 #custom-rendering-modes#
 
-=== Adding custom rendering modes
+==== Adding custom rendering modes
 
 Rendering mode @xxx@ refers to whatever @rmode'xxx@ value that is available in scope.
 
@@ -314,10 +330,8 @@ Declaring a rendering mode locally will also work:
 >>> [int|t|Say #yay{"hello"}|]
 "Say *hello!*"
 
-=== Customizing interpolator
-
-You can declare an interpolator with your own default switches and
-rendering modes, take the source of "Text.Interpolation.Nyan" as an example.
+You can declare /modesets/ ⁠— modules that export several rendering modes.
+The user can then easily pick all or some of the modes by importing that module.
 
 -}
 module Text.Interpolation.Nyan.Tutorial where
@@ -326,3 +340,5 @@ import Data.Text (Text)
 import qualified Data.Text.Lazy as LT
 import Fmt (Buildable, Builder)
 import Fmt.Internal.Core (FromBuilder)
+
+import Text.Interpolation.Nyan.Core (mkInt)

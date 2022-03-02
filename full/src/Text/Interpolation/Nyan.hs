@@ -15,15 +15,15 @@ the basic introduction.
 
 == Use of 'Buildable'. By default
 
-Values are interpolated via `Buildable` typeclass as it is more efficient and
-dedicated to human-readable errors.
+Values are interpolated via 'Formatting.Buildable.Buildable' typeclass as
+it is more efficient and dedicated to human-readable errors.
 
 Using 'Show' is still available as:
 
 >>> [int||Shown value: #s{value}|]
 
-The produced text is also polymorphic by default and can be 'Text',
-lazy 'LT.Text', 'String', 'Builder' or other type.
+The produced text is also polymorphic by default and can be 'Data.Text.Text',
+lazy 'Data.Text.Lazy.Text', 'String', 'Data.Text.Lazy.Builder.Builder' or other type.
 
 == Multiline text
 
@@ -31,7 +31,7 @@ By default, the interpolator strips indentation, one leading newline, and
 spaces before @|]@:
 
 >>> :{
-  [int|
+  [int||
     List:
       - a
       - b
@@ -39,7 +39,7 @@ spaces before @|]@:
 :}
 "List:\n  - a\n  - b\n"
 
-This behaviour can be fine-tuned with switches.
+When necessary, this behaviour can be fine-tuned with switches.
 
 == Switches
 
@@ -57,7 +57,7 @@ To fix the return type to be 'Text':
 To preview the resulting text at compilation stage, pass @!@ switch:
 
 >>> [int|s!| My text: #{value}   |]
->>> -- Will report "My text: ..."
+Reports "My text: ..."
 
 This is reported as a build error, and substitutions are not performed.
 Put @!@ twice to also see all the invisible characters.
@@ -66,14 +66,14 @@ There are much more switches supported. To quicky ask for a help on switches on
 the go, put @?@ switch into the interpolator:
 
 >>> [int|?||]
-"<help on switches>"
+Fails with the help on switches
 
 == Customization
 
 This interpolator allows for a variety of tunning, therefore such a name for
 the library.
 
-* Aside from `Buildable` and `Show` support, one can define their own so-called
+* Aside from 'Formatting.Buildable.Buildable' and 'Show' support, one can define their own so-called
 /rendering modes/.
 * The existing rendering modes can be hidden or grouped into modesets.
   For instance, there is a modeset with 'Show' taken as the default rendering
