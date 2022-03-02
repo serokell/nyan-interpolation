@@ -18,7 +18,7 @@ _AllFieldsAreExported =
         -- ↑ if you change this, also add a field to the record below
   in mkInt defaultInterpolatorOptions
     { valueInterpolator = ValueInterpolator $ error ""
-    , invisibleCharsDemonstration = InvisibleCharsDemonstration $ error ""
+    , invisibleCharsPreview = InvisibleCharsPreview $ error ""
     , defaultSwitchesOptions =
       let _dsopts :: DefaultSwitchesOptions = Internal.DefaultSwitchesOptions
             (error "")

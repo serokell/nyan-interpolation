@@ -29,7 +29,7 @@ intSplice
   -> (SwitchesOptions, InterpolatedString)
   -> ExpQ
 intSplice iopts (sopts, istr) = do
-  invokeDemonstration
+  invokePreview
   if not (monadic sopts)
   then
     [| $finalConvertFuncQ $ mconcat
@@ -80,20 +80,20 @@ intSplice iopts (sopts, istr) = do
             | otherwise = Just (VarE 'fromString)
       return $ maybe id AppE fromStringF (LitE . StringL $ T.unpack str)
 
-    invokeDemonstration :: Q ()
-    invokeDemonstration = do
-      let msg = case demonstrationLevel sopts of
-            DemonstrateNone      -> Nothing
-            DemonstrateExact     -> Just $ mconcat
+    invokePreview :: Q ()
+    invokePreview = do
+      let msg = case previewLevel sopts of
+            PreviewNone      -> Nothing
+            PreviewExact     -> Just $ mconcat
               [ "Interpolated text will look like:\n"
               , flip foldMap istr \case
                   IpString txt -> txt
                   IpInt _      -> "..."
               , "\n"
               ]
-            DemonstrateInvisible -> Just $ mconcat
+            PreviewInvisible -> Just $ mconcat
               [ "Interpolated text will look like:\n"
-              , let showInvisibles = replaceInvisibleChars (invisibleCharsDemonstration iopts)
+              , let showInvisibles = replaceInvisibleChars (invisibleCharsPreview iopts)
                 in flip foldMap istr \case
                   IpString txt -> T.pack $ showInvisibles (T.unpack txt)
                   IpInt _      -> "..."
@@ -102,9 +102,9 @@ intSplice iopts (sopts, istr) = do
 
       -- We report as an error, not as a warning, because
       -- in normal circumstances the user wants to disable
-      -- the demonstration immediately after checking, he/she
+      -- the preview immediately after checking, he/she
       -- probably do not want to build half of the project and
-      -- then build it again after disabling the demonstration.
+      -- then build it again after disabling the preview.
       --
       -- So we want to build the entire module, but do not go further.
       mapM_ (reportError . T.unpack) msg
@@ -156,8 +156,8 @@ tickedValueInterpolator = ValueInterpolator
   \txt -> runValueInterpolator simpleValueInterpolator ("i'" <> txt)
 
 -- | Marks the most common space-like characters.
-simpleInvisibleCharsDemonstration :: InvisibleCharsDemonstration
-simpleInvisibleCharsDemonstration = InvisibleCharsDemonstration go
+simpleInvisibleCharsPreview :: InvisibleCharsPreview
+simpleInvisibleCharsPreview = InvisibleCharsPreview go
   where
     go = \case
       ' ' : s ->

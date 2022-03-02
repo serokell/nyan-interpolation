@@ -218,7 +218,7 @@ The quoter will return concrete t'Builder'.
 
 The quoter will return any type with t'FromBuilder' instance.
 
-==== ! (demonstrate)
+==== ! (preview)
 
 Quoter will show as an error (non-blocking for the module's build) how the
 resulting text looks like with all the enabled switches

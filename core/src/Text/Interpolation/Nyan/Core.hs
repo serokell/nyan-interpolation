@@ -26,7 +26,7 @@ module Text.Interpolation.Nyan.Core
     -- ** Field accessors for interpolator options
   , defaultSwitchesOptions
   , valueInterpolator
-  , invisibleCharsDemonstration
+  , invisibleCharsPreview
     -- * Default switches options
   , DefaultSwitchesOptions
   , basicDefaultSwitchesOptions
@@ -46,8 +46,8 @@ module Text.Interpolation.Nyan.Core
   , tickedValueInterpolator
 
     -- * Adjusting preview
-  , InvisibleCharsDemonstration (..)
-  , simpleInvisibleCharsDemonstration
+  , InvisibleCharsPreview (..)
+  , simpleInvisibleCharsPreview
 
     -- * Rendering modes
   , RMode (..)
@@ -93,5 +93,5 @@ defaultInterpolatorOptions :: InterpolatorOptions
 defaultInterpolatorOptions = InterpolatorOptions
   { defaultSwitchesOptions = basicDefaultSwitchesOptions
   , valueInterpolator = simpleValueInterpolator
-  , invisibleCharsDemonstration = simpleInvisibleCharsDemonstration
+  , invisibleCharsPreview = simpleInvisibleCharsPreview
   }

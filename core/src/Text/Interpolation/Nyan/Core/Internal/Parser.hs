@@ -31,7 +31,7 @@ data SwitchesOptionsBuilder = SwitchesOptionsBuilder
   , returnTypeB              :: (OptionChanged, Maybe ReturnType)
   , reducedNewlinesB         :: (OptionChanged, Maybe Bool)
   , monadicB                 :: (OptionChanged, Maybe Bool)
-  , demonstrationLevelB      :: DemonstrationLevel
+  , previewLevelB            :: PreviewLevel
   }
 
 toSwitchesOptionsBuilder :: DefaultSwitchesOptions -> SwitchesOptionsBuilder
@@ -44,7 +44,7 @@ toSwitchesOptionsBuilder DefaultSwitchesOptions{..} =
   , returnTypeB = (OptionChanged False, defReturnType)
   , reducedNewlinesB = (OptionChanged False, defMonadic)
   , monadicB = (OptionChanged False, defMonadic)
-  , demonstrationLevelB = DemonstrateNone
+  , previewLevelB = PreviewNone
   }
 
 finalizeSwitchesOptions :: MonadFail m => SwitchesOptionsBuilder -> m SwitchesOptions
@@ -56,7 +56,7 @@ finalizeSwitchesOptions SwitchesOptionsBuilder{..} = do
   returnType <- fromOptional "return type" returnTypeB
   reducedNewlines <- fromOptional "reduced newlines" reducedNewlinesB
   monadic <- fromOptional "monadic" monadicB
-  let demonstrationLevel = demonstrationLevelB
+  let previewLevel = previewLevelB
   return SwitchesOptions{..}
   where
     fromOptional desc (_, mval) = case mval of
@@ -115,12 +115,12 @@ setReturnType ty = do
   res <- setIfNew "return type" ty (returnTypeB opts)
   put opts{ returnTypeB = res }
 
-accountDemonstration :: SwitchesOptionsSetter m => m ()
-accountDemonstration = do
+accountPreview :: SwitchesOptionsSetter m => m ()
+accountPreview = do
   opts <- get
-  when (demonstrationLevelB opts == maxBound) $
-    fail "Too high demonstration level"
-  put opts{ demonstrationLevelB = toEnum $ fromEnum (demonstrationLevelB opts) + 1 }
+  when (previewLevelB opts == maxBound) $
+    fail "Too high preview level"
+  put opts{ previewLevelB = toEnum $ fromEnum (previewLevelB opts) + 1 }
 
 notAnyOf :: [Char -> Bool] -> Char -> Bool
 notAnyOf ps c = not $ or (sequence ps c)
@@ -182,7 +182,7 @@ switchesSectionP defSOpts =
       , single 'T' $> ConcreteLText
       ] >>= setReturnType
 
-    , single '!' >> accountDemonstration
+    , single '!' >> accountPreview
 
     , single '?' >> customFailure (SwitchesHelpRequested defSOpts)
 
@@ -242,9 +242,9 @@ switchesHelpMessage sopts =
         , ("B", "return any text-like type (`FromBuilder a => a`)", Just AnyFromBuilder)
         ]
 
-    , helpOnOptions DemonstrateNone
-        [ ("!", "show rendered text (without substitutions) as a warning", DemonstrateExact)
-        , ("!!", "like ! but also marks invisible characters like spaces", DemonstrateInvisible)
+    , helpOnOptions PreviewNone
+        [ ("!", "show rendered text (without substitutions) as a warning", PreviewExact)
+        , ("!!", "like ! but also marks invisible characters like spaces", PreviewInvisible)
         ]
     ]
   where

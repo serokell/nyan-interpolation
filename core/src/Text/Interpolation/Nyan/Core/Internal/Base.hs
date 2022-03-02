@@ -71,13 +71,13 @@ data ReturnType
     -- ^ 'Data.Text.Lazy.Builder.Builder'
   deriving stock (Show, Eq)
 
--- | Requested demonstration level.
-data DemonstrationLevel
-  = DemonstrateNone
+-- | Requested preview level.
+data PreviewLevel
+  = PreviewNone
     -- ^ Do nothing special.
-  | DemonstrateExact
+  | PreviewExact
     -- ^ Print the resulting text as-is (without substitutions).
-  | DemonstrateInvisible
+  | PreviewInvisible
     -- ^ Print the text, replacing invisible characters with special symbols.
   deriving stock (Show, Eq, Enum, Bounded)
 
@@ -90,7 +90,7 @@ data SwitchesOptions = SwitchesOptions
   , returnType              :: ReturnType
   , reducedNewlines         :: Bool
   , monadic                 :: Bool
-  , demonstrationLevel      :: DemonstrationLevel
+  , previewLevel            :: PreviewLevel
   } deriving stock (Show, Eq)
 
 -- | Default switches options set in the interpolator, those that are used
@@ -146,17 +146,17 @@ newtype ValueInterpolator = ValueInterpolator
 -- | Transformation that describes how to mark the invisible characters.
 --
 -- Use 'Monoid' instance to sequence multiple such transformations.
-newtype InvisibleCharsDemonstration = InvisibleCharsDemonstration
+newtype InvisibleCharsPreview = InvisibleCharsPreview
   { replaceInvisibleChars :: String -> String
   } deriving Semigroup via (Endo String)
     deriving Monoid via (Endo String)
 
 -- | Options set when creating an interpolator.
 data InterpolatorOptions = InterpolatorOptions
-  { defaultSwitchesOptions      :: DefaultSwitchesOptions
+  { defaultSwitchesOptions :: DefaultSwitchesOptions
     -- ^ Default switches options.
 
-  , valueInterpolator           :: ValueInterpolator
+  , valueInterpolator      :: ValueInterpolator
     -- ^ Expands text in @{}@ into AST.
     --
     -- We have to leave this changeable because there is no "perfect" expander.
@@ -165,8 +165,8 @@ data InterpolatorOptions = InterpolatorOptions
     -- Some users would prefer a simpler solution which would only allow
     -- variables in @{}@.
 
-  , invisibleCharsDemonstration :: InvisibleCharsDemonstration
-    -- ^ In case, when the switches are set to demonstrate the resulting text
+  , invisibleCharsPreview  :: InvisibleCharsPreview
+    -- ^ In case, when the switches are set to preview the resulting text
     -- with invisibles being marked specially (@!!@), how to update the pieces
     -- of text.
   }
