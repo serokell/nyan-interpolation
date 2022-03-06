@@ -11,8 +11,11 @@ import Fmt (Builder)
 {- | Type that describes rendering modes.
 
 An interpolator that has @rmode'xxx :: RMode t@ variable available in scope
-will be able to use @xxx@ rendering mode; @t@ here stands for the type
-of value appearing in @{}@.
+will be able to use @xxx@ rendering mode.
+
+More precisely, any @#xxx{expr}@ in interpolator will be expanded to
+@renderWithMode rmode'xxx (expr)@ Haskell code
+(some switches may slightly change this behaviour though).
 
 >>> rmode's :: Show a => RMode a
 >>> rmode's = RMode (build . show)

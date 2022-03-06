@@ -138,7 +138,7 @@ recommendedDefaultSwitchesOptions = DefaultSwitchesOptions
   , defMonadic = Just False
   }
 
--- | How to expand values in @{}@ into Haskell AST.
+-- | How to expand values in @#{}@ into Haskell AST.
 newtype ValueInterpolator = ValueInterpolator
   { runValueInterpolator :: Text -> ExpQ
   }
@@ -157,13 +157,18 @@ data InterpolatorOptions = InterpolatorOptions
     -- ^ Default switches options.
 
   , valueInterpolator      :: ValueInterpolator
-    -- ^ Expands text in @{}@ into AST.
+    -- ^ Expands text in @#{}@ into AST.
     --
     -- We have to leave this changeable because there is no "perfect" expander.
     -- Using the most appropriate one would require relying on @haskell-src-exts@
     -- package which is quite a heavy-weight dependency.
     -- Some users would prefer a simpler solution which would only allow
-    -- variables in @{}@.
+    -- variables in @#{}@.
+    --
+    -- Interpreting the passed text in tricky ways is valid.
+    -- For instance, for specialized interpolators @#{var}@
+    -- could be expanded to @local'var@, @view varLens@, or more complex
+    -- Haskell code.
 
   , invisibleCharsPreview  :: InvisibleCharsPreview
     -- ^ In case, when the switches are set to preview the resulting text
