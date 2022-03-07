@@ -70,6 +70,7 @@ test_DefaultInterpolator = testGroup "Default interpolator"
         let s = "nyan"
         [int|t|#mega{s}|]
           @?= "mega nyan"
+
     , testCase "Spaces in {}" do
         let a = 5
         let s = "string"

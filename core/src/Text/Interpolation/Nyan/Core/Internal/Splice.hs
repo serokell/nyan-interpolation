@@ -119,7 +119,7 @@ simpleValueInterpolator :: ValueInterpolator
 simpleValueInterpolator = ValueInterpolator \txt -> do
   let varNameTxt = T.strip txt
   unless (T.all isAllowedChar varNameTxt) $
-    fail "Only passing sole variables are allowed by this interpolator"
+    fail "Only passing sole variables is allowed by this interpolator"
   when (T.null varNameTxt) $
     fail "Empty placeholder"
   lookupValueName (T.unpack varNameTxt) >>= \case

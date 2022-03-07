@@ -4,13 +4,17 @@
 
 module Test.Util where
 
+import Control.Monad (guard)
 import Control.Monad.Except (ExceptT, runExceptT, throwError)
 import Control.Monad.Reader (ReaderT, asks, runReaderT)
 import Control.Monad.Trans (MonadIO, lift)
 import Control.Monad.Writer (WriterT, runWriterT, tell)
+import Data.Functor (($>))
+import Data.Text (Text)
+import qualified Data.Text as T
 import Data.Tuple (swap)
 import GHC.Stack (HasCallStack)
-import Language.Haskell.TH.Syntax (Extension (..), Q, Quasi (..))
+import Language.Haskell.TH.Syntax (Extension (..), Quasi (..), mkName)
 import Test.HUnit (Assertion, assertFailure)
 
 import Text.Interpolation.Nyan.Core
@@ -25,29 +29,32 @@ import Text.Interpolation.Nyan.Core
 data QReport
   = QRWarning String
   | QRError String
+  deriving stock (Show, Eq)
 
 data QOpts = QOpts
   { qoOverloadedStringsEnabled :: Bool
+  , qoAvailableVariables       :: [Text]
   }
 
 defQOpts :: QOpts
 defQOpts = QOpts
   { qoOverloadedStringsEnabled = True
+  , qoAvailableVariables = mempty
   }
 
-newtype TestQ a = TestQ { unTestQ :: ReaderT QOpts (ExceptT String (WriterT [QReport] Q)) a }
+newtype TestQ a = TestQ { unTestQ :: ReaderT QOpts (ExceptT String (WriterT [QReport] IO)) a }
   deriving newtype (Functor, Applicative, Monad, MonadIO)
 
-runTestQ' :: QOpts -> TestQ a -> Q ([QReport], Either String a)
+runTestQ' :: QOpts -> TestQ a -> IO ([QReport], Either String a)
 runTestQ' qopts = fmap swap . runWriterT . runExceptT . flip runReaderT qopts . unTestQ
 
-runTestQ :: TestQ a -> Q (Either String a)
+runTestQ :: TestQ a -> IO (Either String a)
 runTestQ = fmap snd . runTestQ' defQOpts
 
 instance MonadFail TestQ where
   fail = TestQ . throwError
 
-liftToTestQ :: Q a -> TestQ a
+liftToTestQ :: IO a -> TestQ a
 liftToTestQ = TestQ . lift . lift . lift
 
 instance Quasi TestQ where
@@ -61,8 +68,11 @@ instance Quasi TestQ where
     other             -> error $ "Asked for extension " <> show other
   qExtsEnabled = error "not implemented"
 
+  qLookupName _cond name = TestQ do
+    vars <- asks qoAvailableVariables
+    return $ guard (T.pack name `elem` vars) $> mkName name
+
   qNewName a = liftToTestQ $ qNewName a
-  qLookupName a b = liftToTestQ $ qLookupName a b
   qReify a = liftToTestQ $ qReify a
   qReifyFixity a = liftToTestQ $ qReifyFixity a
   qReifyType a = liftToTestQ $ qReifyType a
