@@ -52,6 +52,13 @@ myMultilineText =
 
 The full introduction can be found in the haddock documentation.
 
+## Packages
+
+This repository contains the following haskell packages:
+* [`full`](./full) contains the basic interpolator and corresponds to the [`nyan-interpolation`](https://hackage.haskell.org/package/nyan-interpolation) library;
+* [`core`](./core) provides means for defining custom interpolators and corresponds to the [`nyan-interpolation-core`](https://hackage.haskell.org/package/nyan-interpolation-core) library;
+* [`simple`](./simple) contains the lightweight interpolator and corresponds to the [`nyan-interpolation-simple`](https://hackage.haskell.org/package/nyan-interpolation-simple) library.
+
 ## IDE Integration
 
 ### VSCode
