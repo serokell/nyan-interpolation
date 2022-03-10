@@ -9,9 +9,9 @@
 [![License: MPL 2.0](https://img.shields.io/badge/License-MPL%202.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0)
 [![GitHub CI](https://github.com/serokell/nyan-interpolation/workflows/CI/badge.svg)](https://github.com/serokell/nyan-interpolation/actions)
 
-[![nyan-interpolation](https://badgen.net/hackage/v/nyan-interpolation?color=purple)](https://hackage.haskell.org/package/nyan-interpolation)
-[![nyan-interpolation-core](https://badgen.net/hackage/v/nyan-interpolation-core?color=cyan)](https://hackage.haskell.org/package/nyan-interpolation-core)
-[![nyan-interpolation-simple](https://badgen.net/hackage/v/nyan-interpolation-simple?color=green)](https://hackage.haskell.org/package/nyan-interpolation-simple)
+[![nyan-interpolation](https://badgen.net/hackage/v/nyan-interpolation?color=purple&label=nyan-interpolation)](https://hackage.haskell.org/package/nyan-interpolation)
+[![nyan-interpolation-core](https://badgen.net/hackage/v/nyan-interpolation-core?color=cyan&label=nyan-interpolation-core)](https://hackage.haskell.org/package/nyan-interpolation-core)
+[![nyan-interpolation-simple](https://badgen.net/hackage/v/nyan-interpolation-simple?color=green&label=nyan-interpolation-simple)](https://hackage.haskell.org/package/nyan-interpolation-simple)
 
 Flexible production-scale string interpolation library.
 
