@@ -6,9 +6,7 @@
 {
 	"Insert an interpolator": {
 		"prefix": "int",
-		"body": [
-			"[int||$0|]"
-		],
+		"body": "[int||$0|]",
 		"description": "Insert string interpolator"
 	},
 	"Insert a multiline interpolator": {
@@ -19,5 +17,11 @@
 			"  |]"
 		],
 		"description": "Insert a multiline string interpolator"
+	},
+	"Insert a placeholder": {
+		"prefix": "#",
+		"scope": "string.unquoted.haskell.nyan",
+		"body": "#{ $1 }$0",
+		"description": "Insert an interpolation placeholder"
 	}
 }

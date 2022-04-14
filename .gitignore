@@ -28,3 +28,5 @@ cabal.project.local~
 
 # Project-custom files
 stack-advanced-exts.yaml.lock
+ide/vscode/int.tmLanguage.json
+ide/vscode/**/*.vsix

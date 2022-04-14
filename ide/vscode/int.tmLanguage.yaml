@@ -1,0 +1,41 @@
+name: Nyan-interpolator
+scopeName: interpolator.haskell.nyan
+injectionSelector: "L:meta.embedded.block.int"
+patterns:
+  - include: "#interpolator"
+repository:
+  interpolator:
+    begin: >-
+      ([^|]*)
+      (\|)
+    beginCaptures:
+      "1":
+        name: meta.switches-section.haskell.nyan
+        patterns:
+          - include: "#switch"
+      "2":
+        name: punctuation.bar.haskell.nyan
+    end: '\]'
+    contentName: string.unquoted.haskell.nyan
+    patterns:
+      - include: "#placeholder"
+  switch:
+    patterns:
+      - name: keyword.other.switch.$0.haskell.nyan
+        match: "[SsDdAaZzNnMmTtBb?!]"
+  placeholder:
+    # name: string.interpolated.haskell.nyan
+    begin: '(?<(?!\\)(#)([A-Za-z0-9]*))({)'
+    end: "}"
+    # beginCaptures:
+    #   "1":
+    #     name: support.constant.placeholder.hash.haskell.nyan
+    #   "2":
+    #     name: support.constant.rmode.$0.haskell.nyan
+    #   "3":
+    #     name: support.constant.placeholder.bracket.haskell.nyan
+    # endCaptures:
+    #   "0":
+    #     name: support.constant.placeholder.bracket.haskell.nyan
+    # contentName: meta.embedded.block.haskell
+    name: meta.embedded.block.haskell

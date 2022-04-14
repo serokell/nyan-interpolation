@@ -1,0 +1,79 @@
+{
+  "name": "language-nyan-interpolation-haskell",
+  "displayName": "Syntax support for 'nyan-interpolation' Haskell library",
+  "description": "Support for nyan-interpolation Haskell package.",
+  "version": "0.9.0",
+  "publisher": "Serokell",
+  "engines": {
+    "vscode": "^1.0.0"
+  },
+  "icon": "logo.png",
+  "files": [
+    "int.code-snippets",
+    "int.tmLanguage.json",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "language",
+    "haskell",
+    "nyan",
+    "interpolation",
+    "highlight",
+    "syntax"
+  ],
+  "license": "MPL-2.0-Clause",
+  "homepage": "https://github.com/serokell/nyan-interpolation",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/serokell/nyan-interpolation.git"
+  },
+  "bugs": {
+    "url": "https://github.com/serokell/nyan-interpolation/issues"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "configuration": {
+      "type": "object",
+      "title": "Haskell Nyan-interpolation configuration",
+      "properties": {
+        "haskell.nyanInterpolation.recognizedQuoters": {
+          "type": "array",
+          "default": [
+            "int"
+          ],
+          "description": "Which quasi-quoter names should be recognized as nyan interpolator."
+        }
+      }
+    },
+    "grammars": [
+      {
+        "path": "int.tmLanguage.json",
+        "scopeName": "interpolator.haskell.nyan",
+        "injectTo": [
+          "source.haskell"
+        ],
+        "embeddedLanguages": {
+          "meta.embedded.block.haskell": "haskell"
+        }
+      }
+    ],
+    "snippets": [
+      {
+        "language": "haskell",
+        "path": "int.code-snippets"
+      }
+    ]
+  },
+  "scripts": {
+    "compile-grammar": "npx js-yaml int.tmLanguage.yaml > int.tmLanguage.json",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "js-yaml": "^4.1.0",
+    "vsce": "^1.75.0",
+    "vscode": "^1.0.0"
+  }
+}
