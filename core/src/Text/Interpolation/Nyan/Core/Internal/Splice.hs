@@ -17,9 +17,6 @@ import Language.Haskell.TH
 import Text.Interpolation.Nyan.Core.Internal.Base
 import Text.Interpolation.Nyan.Core.Internal.RMode
 
--- | Expression result of which can yet be somehow extended.
-type ExtendableRes = (ExpQ -> ExpQ) -> ExpQ
-
 -- | Build interpolated string into TH splice.
 
 -- Note: one of things we aim at is concise produced code, as the user may

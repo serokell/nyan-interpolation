@@ -5,8 +5,9 @@
 -- | Common additional rendering modes like the ones for numbers.
 module Text.Interpolation.Nyan.RModes.CommonExtra where
 
-import Fmt (Builder)
+import Fmt (Builder, build)
 
+import Control.Exception (Exception (..))
 import Text.Interpolation.Nyan.Core
 import Text.Interpolation.Nyan.RModes.Buildable (rmode')
 
@@ -30,3 +31,9 @@ rmode'd = rmode'
 -- Alias for 'rmode'd'.
 rmode'n :: RMode Integer
 rmode'n = rmode'd
+
+-- * Exceptions
+
+-- | Render exception via 'displayException'.
+rmode'exc :: Exception e => RMode e
+rmode'exc = RMode (build . displayException)

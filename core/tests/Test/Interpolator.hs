@@ -5,6 +5,7 @@
 -- | Tests on the interpolator in overall.
 module Test.Interpolator where
 
+import Control.Exception (AsyncException (ThreadKilled))
 import Control.Monad.Reader (ask, runReader)
 import Data.Functor.Identity (Identity (..))
 import Data.Text (Text)
@@ -59,18 +60,6 @@ test_DefaultInterpolator = testGroup "Default interpolator"
         [int|t|Values: {#{a}, #{b}} and #{c}|]
           @?= "Values: {X, Y} and Z"
 
-    , testCase "Rendering modes" do
-        let a = PrintedValue 1
-        let n = 5
-        let s = "string"
-        [int|t|#{a}, #s{a}, #d{n}, #l{s}|]
-          @?= "v = 1, PrintedValue 1, 5, string"
-
-    , testCase "Locally defined rendering mode" do
-        let s = "nyan"
-        [int|t|#mega{s}|]
-          @?= "mega nyan"
-
     , testCase "Spaces in {}" do
         let a = 5
         let s = "string"
@@ -78,6 +67,25 @@ test_DefaultInterpolator = testGroup "Default interpolator"
           @?= "5, string"
 
     ]
+
+    , testGroup "Rendering modes"
+      [ testCase "Basic" do
+          let a = PrintedValue 1
+          let n = 5
+          let s = "string"
+          [int|t|#{a}, #s{a}, #d{n}, #l{s}|]
+            @?= "v = 1, PrintedValue 1, 5, string"
+
+      , testCase "Locally defined rendering mode" do
+          let s = "nyan"
+          [int|t|#mega{s}|]
+            @?= "mega nyan"
+
+      , testCase "Exception" do
+          let err = ThreadKilled
+          [int|t|Failed with: #exc{err}|]
+            @?= "Failed with: thread killed"
+      ]
 
     , testGroup "Escaping"
       [ testCase "Newline" do
