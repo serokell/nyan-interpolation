@@ -20,7 +20,7 @@ default-extensions: *default-extensions
 ghc-options: *ghc-options
 
 dependencies:
-  - base <4.15
+  - base <4.17
   - nyan-interpolation-core
   - text
 
