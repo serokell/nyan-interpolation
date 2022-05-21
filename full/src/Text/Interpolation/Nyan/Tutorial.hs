@@ -7,7 +7,7 @@
 
 {- | Tutorial on the nyan-interpolation.
 
->>> import Nyan.Interpolation
+>>> import Text.Interpolation.Nyan
 >>>
 >>> let who = "world"
 >>> in [int||Hello #{who}!|]
@@ -24,7 +24,7 @@ Defaults are:
 * If multiline text is provided, its indentation, leading newline and trailing spaces are stripped:
 
 >>> :{
-  putStrLn [int||
+  putStr [int||
       Yay
       Here goes
         my text
@@ -35,7 +35,6 @@ Yay
 Here goes
   my text
 and ends here.
-<BLANKLINE>
 
 Note that the module with interpolator is assumed to be imported with an
 implicit import list. This should not spoil your namespace, @int@ is the only
@@ -157,7 +156,7 @@ the initial line feed will appear in the resulting text.
 
 ==== Z (no last line stripping)
 
-Similarly to the previous option, by default he position of the trailing @|]@
+Similarly to the previous option, by default the position of the trailing @|]@
 does not affect the result.
 When the option is disabled via passing @Z@ switch, spaces at the last line
 will be preserved.
@@ -205,7 +204,8 @@ Accept monadic values.
 To be stricter, this switch requires only @Applicative@ instance.
 
 In case monadic actions have side effects, they will be applied in the same order
-in which braces appear in the quoter. /But you are not going to use this behaviour, don't you?/
+in which placeholders appear in the quoter. /But you are not going to use this
+behaviour, don't you?/
 
 ==== t (return [t]ext)
 
@@ -225,7 +225,7 @@ The quoter will return any type with t'FromBuilder' instance.
 
 ==== ! (preview)
 
-Quoter will show as an error (non-blocking for the module's build) showing how the
+Quoter will show as an error (non-blocking for the module's build) how the
 resulting text looks like with all the enabled switches
 (but without substitutions).
 
@@ -292,7 +292,7 @@ import Text.Interpolation.Nyan.Core
 
 int :: QuasiQuoter
 int = mkInt defaultInterpolationOptions
-  { switchesOptions = basicDefaultSwitchesOptions
+  { switchesOptions = recommendedDefaultSwitchesOptions
     { spacesTrimming = True
     , returnType = ConcreteText
     }
@@ -311,7 +311,8 @@ int = mkInt defaultInterpolationOptions
 
 ==== Adding custom rendering modes
 
-Rendering mode @xxx@ refers to whatever @rmode'xxx@ value that is available in scope.
+Rendering mode @xxx@ refers to whatever @rmode'xxx@ value of type 'RMode' that
+is available in scope.
 
 For instance, the rendering mode for 'Show' is declared as
 
@@ -330,7 +331,7 @@ Declaring a rendering mode locally will also work:
 >>> [int|t|Say #yay{"hello"}|]
 "Say *hello!*"
 
-You can declare /modesets/ ⁠— modules that export several rendering modes.
+Finally, you can declare /modesets/ ⁠— modules that export several rendering modes.
 The user can then easily pick all or some of the modes by importing that module.
 
 -}
@@ -341,4 +342,4 @@ import qualified Data.Text.Lazy as LT
 import Fmt (Buildable, Builder)
 import Fmt.Internal.Core (FromBuilder)
 
-import Text.Interpolation.Nyan.Core (mkInt)
+import Text.Interpolation.Nyan.Core (mkInt, RMode)

@@ -76,8 +76,9 @@ the library.
 * Aside from 'Formatting.Buildable.Buildable' and 'Show' support, one can define their own so-called
 /rendering modes/.
 * The existing rendering modes can be hidden or grouped into modesets.
-  For instance, there is a modeset with 'Show' taken as the default rendering
-  mode; it is used as the basic modeset in "Text.Interpolation.Nyan.Show" module.
+  For instance, there is a modeset "Text.Interpolation.Nyan.RModes.Show" with
+  'Show' taken as the default rendering mode; it is used as the basic modeset in
+  "Text.Interpolation.Nyan.Show" module.
 * The set of switches enabled by default is also customizable.
 
 Generally, once the user gets comfortable with the library, we encourage them
