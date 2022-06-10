@@ -17,6 +17,7 @@ import Fmt (Builder, build, fmt)
 import Text.Interpolation.Nyan.Core.Internal.Base
 import Text.Megaparsec (Parsec, customFailure, eof, errorBundlePretty, label, lookAhead, parse,
                         single, takeWhile1P, takeWhileP)
+import Text.Megaparsec.Char (string)
 import Text.Megaparsec.Error (ShowErrorComponent (..))
 
 newtype OptionChanged = OptionChanged Bool
@@ -25,6 +26,7 @@ newtype OptionChanged = OptionChanged Bool
 -- | An accumulator for switch options during parsing.
 data SwitchesOptionsBuilder = SwitchesOptionsBuilder
   { spacesTrimmingB          :: (OptionChanged, Maybe Bool)
+  , commentingB              :: (OptionChanged, Maybe Bool)
   , indentationStrippingB    :: (OptionChanged, Maybe Bool)
   , leadingNewlineStrippingB :: (OptionChanged, Maybe Bool)
   , trailingSpacesStrippingB :: (OptionChanged, Maybe Bool)
@@ -38,6 +40,7 @@ toSwitchesOptionsBuilder :: DefaultSwitchesOptions -> SwitchesOptionsBuilder
 toSwitchesOptionsBuilder DefaultSwitchesOptions{..} =
   SwitchesOptionsBuilder
   { spacesTrimmingB = (OptionChanged False, defSpacesTrimming)
+  , commentingB = (OptionChanged False, defCommenting)
   , indentationStrippingB = (OptionChanged False, defIndentationStripping)
   , leadingNewlineStrippingB = (OptionChanged False, defLeadingNewlineStripping)
   , trailingSpacesStrippingB = (OptionChanged False, defTrailingSpacesStripping)
@@ -50,6 +53,7 @@ toSwitchesOptionsBuilder DefaultSwitchesOptions{..} =
 finalizeSwitchesOptions :: MonadFail m => SwitchesOptionsBuilder -> m SwitchesOptions
 finalizeSwitchesOptions SwitchesOptionsBuilder{..} = do
   spacesTrimming <- fromOptional "spaces trimming" spacesTrimmingB
+  commenting <- fromOptional "allow commenting" commentingB
   indentationStripping <- fromOptional "indentation stripping" indentationStrippingB
   leadingNewlineStripping <- fromOptional "leading newline stripping" leadingNewlineStrippingB
   trailingSpacesStripping <- fromOptional "trailing spaces stripping" trailingSpacesStrippingB
@@ -72,6 +76,12 @@ setIfNew desc new (OptionChanged ch, old)
   | ch = fail $ "Modifying `" <> desc <> "` option for the second time"
   | old == Just new = fail $ "Switch option `" <> desc <> "` is set redundantly"
   | otherwise = return (OptionChanged True, Just new)
+
+setCommenting :: SwitchesOptionsSetter m => Bool -> m ()
+setCommenting enable = do
+  opts <- get
+  res <- setIfNew "allow comments" enable (commentingB opts)
+  put opts{ commentingB = res }
 
 setSpacesTrimming :: SwitchesOptionsSetter m => Bool -> m ()
 setSpacesTrimming enable = do
@@ -151,6 +161,11 @@ switchesSectionP defSOpts =
       ] >>= setSpacesTrimming
 
     , asum
+      [ single 'c' $> True
+      , single 'C' $> False
+      ] >>= setCommenting
+
+    , asum
       [ single 'd' $> True
       , single 'D' $> False
       ] >>= setIndentationStripping
@@ -193,6 +208,7 @@ switchesSectionP defSOpts =
 switchesHelpMessage :: DefaultSwitchesOptions -> Builder
 switchesHelpMessage sopts =
   let _exhaustivnessCheck :: SwitchesOptions = SwitchesOptions
+        (error "")
         (error "")
         (error "")
         (error "")
@@ -257,8 +273,14 @@ switchesHelpMessage sopts =
 intPieceP :: Ord e => Parsec e Text [ParsedIntPiece]
 intPieceP = asum
   [
+
+    -- consume comments
+    string "--" >>= \prefix -> do
+      content <- takeWhile1P Nothing (/= '\n')
+      pure $ one $ PipComments (prefix <> content)
+
     -- consume normal text
-    one . PipString <$> takeWhile1P Nothing (notAnyOf [(== '\\'), (== '#'), isSpace])
+  , one . PipString <$> takeWhile1P Nothing (notAnyOf [(== '\\'), (== '#'), isSpace])
 
     -- potentially interpolator case
   , single '#' *> do

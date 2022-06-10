@@ -32,6 +32,8 @@ data IntData = IntData
 data ParsedIntPiece
   = PipString Text
     -- ^ Mere text.
+  | PipComments Text
+    -- ^ Comments.
   | PipNewline Text
     -- ^ Some line feed.
     -- This must be preferred over 'PipString'.
@@ -84,6 +86,7 @@ data PreviewLevel
 -- | All switches options.
 data SwitchesOptions = SwitchesOptions
   { spacesTrimming          :: Bool
+  , commenting              :: Bool
   , indentationStripping    :: Bool
   , leadingNewlineStripping :: Bool
   , trailingSpacesStripping :: Bool
@@ -100,6 +103,7 @@ data SwitchesOptions = SwitchesOptions
 -- mandatory for specifying in the interpolator.
 data DefaultSwitchesOptions = DefaultSwitchesOptions
   { defSpacesTrimming          :: Maybe Bool
+  , defCommenting              :: Maybe Bool
   , defIndentationStripping    :: Maybe Bool
   , defLeadingNewlineStripping :: Maybe Bool
   , defTrailingSpacesStripping :: Maybe Bool
@@ -117,6 +121,7 @@ data DefaultSwitchesOptions = DefaultSwitchesOptions
 basicDefaultSwitchesOptions :: DefaultSwitchesOptions
 basicDefaultSwitchesOptions = DefaultSwitchesOptions
   { defSpacesTrimming = Just False
+  , defCommenting = Just False
   , defIndentationStripping = Just False
   , defLeadingNewlineStripping = Just False
   , defTrailingSpacesStripping = Just False
@@ -130,6 +135,7 @@ basicDefaultSwitchesOptions = DefaultSwitchesOptions
 recommendedDefaultSwitchesOptions :: DefaultSwitchesOptions
 recommendedDefaultSwitchesOptions = DefaultSwitchesOptions
   { defSpacesTrimming = Just False
+  , defCommenting = Just False
   , defIndentationStripping = Just True
   , defLeadingNewlineStripping = Just True
   , defTrailingSpacesStripping = Just True

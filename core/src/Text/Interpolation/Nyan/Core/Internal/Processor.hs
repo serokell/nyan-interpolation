@@ -15,6 +15,7 @@ import Text.Interpolation.Nyan.Core.Internal.Base
 processIntString :: SwitchesOptions -> ParsedInterpolatedString -> InterpolatedString
 processIntString sopts istr = istr
   & V.fromList
+  & do if commenting sopts then skipComments else id
   & do if leadingNewlineStripping sopts then stripLeadingNewline else id
   & do if trailingSpacesStripping sopts then stripTrailingLeadingWs else id
   & do if indentationStripping sopts then stripCommonIndentation else id
@@ -30,6 +31,8 @@ processIntString sopts istr = istr
   where
     (&) = flip ($)
 
+    skipComments = V.filter \case PipComments{} -> False; _ -> True
+
     stripLeadingNewline ps = case V.uncons ps of
       Just (PipNewline _, ps') -> ps'
       _                        -> ps
@@ -43,6 +46,9 @@ processIntString sopts istr = istr
       PipLeadingWs _ -> Nothing
       PipEmptyLine -> Nothing
       PipString s ->
+        let s' = trimText s
+        in if T.null s' then Nothing else Just (PipString s')
+      PipComments s ->
         let s' = trimText s
         in if T.null s' then Nothing else Just (PipString s')
       p@PipInt{} -> Just p
@@ -104,6 +110,7 @@ processIntString sopts istr = istr
           -- invisible spaces to break the newlines sequence.
           p@PipLeadingWs{} : l -> p : skipNext l
           p@PipString{} : l    -> p : reduceNext l
+          p@PipComments{} : l  -> p : reduceNext l
           p@PipInt{} : l       -> p : reduceNext l
           []                   -> []
 
@@ -113,6 +120,7 @@ processIntString sopts istr = istr
       PipNewline nl  -> IpString nl
       PipLeadingWs n -> IpString . mconcat $ replicate (fromIntegral n) " "
       PipEmptyLine   -> IpString mempty
+      PipComments s  -> IpString s
       PipInt i       -> IpInt i
 
     glueStrings :: InterpolatedString -> InterpolatedString

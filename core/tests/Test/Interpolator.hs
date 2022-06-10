@@ -297,6 +297,20 @@ test_DefaultInterpolator = testGroup "Default interpolator"
 
       ]
 
+      ----------------------------------
+    , testGroup "Commenting"
+
+      [ testCase "Basic comments" do
+          [int|tc|Abc -- this is a comment|]
+              @?= "Abc "
+
+      , testCase "Comments in arbitrary lines" do
+          [int|tc| -- comments at the beginning
+              My text -- comments in the middle
+              -- comments at the end
+          |] @?= " \nMy text \n\n"
+      ]
+
     ]
 
   ]
