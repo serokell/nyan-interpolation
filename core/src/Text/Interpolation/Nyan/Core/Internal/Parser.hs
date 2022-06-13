@@ -226,6 +226,11 @@ switchesHelpMessage sopts =
         , ("S", "disable spaces trimming", Just False)
         ]
 
+    , helpOnOptions (defCommenting sopts)
+        [ ("c", "enable commenting", Just True)
+        , ("C", "disable commenting", Just False)
+        ]
+
     , helpOnOptions (defIndentationStripping sopts)
         [ ("d", "enable indentation stripping", Just True)
         , ("D", "disable indentation stripping", Just False)
