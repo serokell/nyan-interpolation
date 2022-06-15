@@ -32,8 +32,6 @@ data IntData = IntData
 data ParsedIntPiece
   = PipString Text
     -- ^ Mere text.
-  | PipComments Text
-    -- ^ Comments.
   | PipNewline Text
     -- ^ Some line feed.
     -- This must be preferred over 'PipString'.
