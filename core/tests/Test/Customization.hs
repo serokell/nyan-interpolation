@@ -33,6 +33,7 @@ _AllFieldsAreExported =
       in basicDefaultSwitchesOptions
         { defIndentationStripping = Nothing
         , defSpacesTrimming = Nothing
+        , defCommenting = Nothing
         , defLeadingNewlineStripping = Nothing
         , defTrailingSpacesStripping = Nothing
         , defReducedNewlines = Nothing
