@@ -17,7 +17,7 @@ import Fmt (Builder, build, fmt)
 import Text.Interpolation.Nyan.Core.Internal.Base
 import Text.Megaparsec (Parsec, customFailure, eof, errorBundlePretty, label, lookAhead, parse,
                         single, takeWhile1P, takeWhileP)
-import Text.Megaparsec.Char.Lexer (skipLineComment)
+import Text.Megaparsec.Char.Lexer (skipBlockComment, skipLineComment)
 import Text.Megaparsec.Error (ShowErrorComponent (..))
 
 newtype OptionChanged = OptionChanged Bool
@@ -279,7 +279,8 @@ intPieceP :: Ord e => SwitchesOptions -> Parsec e Text [ParsedIntPiece]
 intPieceP SwitchesOptions{..} = asum [
 
     -- ignore comments if 'commenting' switch is on
-    guard commenting *> skipLineComment "--" $> []
+    guard commenting *>
+      asum [ skipLineComment "--" , skipBlockComment "{-" "-}" ] $> []
 
     -- consume normal text
   , one . PipString <$> takeWhile1P Nothing (notAnyOf [(== '\\'), (== '#'), isSpace])

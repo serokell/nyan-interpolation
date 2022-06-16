@@ -309,6 +309,17 @@ test_DefaultInterpolator = testGroup "Default interpolator"
               My text -- comments in the middle
               -- comments at the end
           |] @?= " \nMy text \n\n"
+
+      , testCase "Inline block comments" do
+          [int|tc| My text {- inline comment -}
+          |] @?= " My text \n"
+
+      , testCase "Multiline block comments" do
+          [int|tc| My text {- multiline block
+              comments are fun,
+              aren't they?
+              -}
+          |] @?= " My text \n"
       ]
 
     ]
