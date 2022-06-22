@@ -8,4 +8,6 @@ packages:
   - simple
   - full
 
-extra-deps: []
+extra-deps:
+- git: https://github.com/Martoon-00/tasty-discover.git
+  commit: 43bed101756befbfeba046a89b92d14cfbb321b2

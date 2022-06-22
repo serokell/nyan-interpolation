@@ -24,7 +24,11 @@ dependencies:
   - megaparsec
   - mtl
   - vector
+  - tasty
+  - tasty-discover
   - text
+  - HUnit
+  - tasty-hunit-compat
   - template-haskell
 
 library:

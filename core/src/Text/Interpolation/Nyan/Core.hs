@@ -65,6 +65,10 @@ import Text.Interpolation.Nyan.Core.Internal.Processor
 import Text.Interpolation.Nyan.Core.Internal.RMode
 import Text.Interpolation.Nyan.Core.Internal.Splice
 
+import Test.Tasty (testGroup)
+import qualified Test.Tasty.Discover as TD
+import Test.Tasty.HUnit (testCase, (@?=))
+
 -- | Construct an interpolator.
 --
 -- Usually you pass some options here that you consider canonical and use
@@ -95,3 +99,7 @@ defaultInterpolatorOptions = InterpolatorOptions
   , valueInterpolator = simpleValueInterpolator
   , invisibleCharsPreview = simpleInvisibleCharsPreview
   }
+
+instance (Eq a, Show a) => TD.TestGroup [(a, a)] where
+  testGroup name suite =
+    pure $ testGroup name $ map (testCase "?" . uncurry (@?=)) suite

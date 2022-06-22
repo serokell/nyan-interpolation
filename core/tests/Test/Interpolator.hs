@@ -320,3 +320,9 @@ test_HaskellEnvironment = testGroup "Haskell environment"
       ]
 
   ]
+
+test_TryCustom :: [(Text, Text)]
+test_TryCustom =
+  [ ([int||Abc|], "Abc")
+  , ([int||Qwe|], "qwe")
+  ]

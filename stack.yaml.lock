@@ -3,7 +3,18 @@
 # For more information, please see the documentation at:
 #   https://docs.haskellstack.org/en/stable/lock_files
 
-packages: []
+packages:
+- completed:
+    name: tasty-discover
+    version: 4.2.4
+    git: https://github.com/Martoon-00/tasty-discover.git
+    pantry-tree:
+      size: 1817
+      sha256: 3c5b9b22c1c532322b318fc190fd75e471bf1aa1f27d32eecee3e6a06f8a82f0
+    commit: 43bed101756befbfeba046a89b92d14cfbb321b2
+  original:
+    git: https://github.com/Martoon-00/tasty-discover.git
+    commit: 43bed101756befbfeba046a89b92d14cfbb321b2
 snapshots:
 - completed:
     size: 587546
