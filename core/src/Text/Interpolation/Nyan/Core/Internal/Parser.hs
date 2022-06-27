@@ -53,7 +53,7 @@ toSwitchesOptionsBuilder DefaultSwitchesOptions{..} =
 finalizeSwitchesOptions :: MonadFail m => SwitchesOptionsBuilder -> m SwitchesOptions
 finalizeSwitchesOptions SwitchesOptionsBuilder{..} = do
   spacesTrimming <- fromOptional "spaces trimming" spacesTrimmingB
-  commenting <- fromOptional "allow commenting" commentingB
+  commenting <- fromOptional "comments handling" commentingB
   indentationStripping <- fromOptional "indentation stripping" indentationStrippingB
   leadingNewlineStripping <- fromOptional "leading newline stripping" leadingNewlineStrippingB
   trailingSpacesStripping <- fromOptional "trailing spaces stripping" trailingSpacesStrippingB
@@ -80,7 +80,7 @@ setIfNew desc new (OptionChanged ch, old)
 setCommenting :: SwitchesOptionsSetter m => Bool -> m ()
 setCommenting enable = do
   opts <- get
-  res <- setIfNew "allow comments" enable (commentingB opts)
+  res <- setIfNew "comments handling" enable (commentingB opts)
   put opts{ commentingB = res }
 
 setSpacesTrimming :: SwitchesOptionsSetter m => Bool -> m ()

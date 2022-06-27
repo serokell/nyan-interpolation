@@ -320,6 +320,13 @@ test_DefaultInterpolator = testGroup "Default interpolator"
               aren't they?
               -}
           |] @?= " My text \n"
+
+      , testCase "Other switches keep the comments" do
+          [int|t|
+              The beginning
+              -- some comments in the middle
+              The end
+          |] @?= "The beginning\n-- some comments in the middle\nThe end\n"
       ]
 
     ]

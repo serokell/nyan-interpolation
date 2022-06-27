@@ -223,6 +223,10 @@ The quoter will return concrete t'Builder'.
 
 The quoter will return any type with t'FromBuilder' instance.
 
+==== c ([c]omments handling)
+
+Ignore line comments starting with @--@ and/or block comments enclosed in @{- ... -}@.
+
 ==== ! (preview)
 
 Quoter will show as an error (non-blocking for the module's build) how the
@@ -272,6 +276,16 @@ affects indentation stripping to also ignore the line with @|]@:
 :}
 "\nValue 1 is 5, value 2 is 10\n"
 
+* Comments __are not ignored__ by other switches unless comments handling is explicitly turned on:
+
+>>> :{
+  [int|t|
+    The beginning
+    -- some comments in the middle
+    The end
+  |]
+:}
+"The beginning\n-- some comments in the middle\nThe end\n"
 
 === Customizing the interpolator
 
