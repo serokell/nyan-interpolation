@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 53cd08bc1c6de787c00e5dddb89582000ea02db4675760cf87d8f583338306da
+-- hash: 7535f9131d6ab7bbd2900d506b99e84497f049250fb16404b901cd224014a729
 
 name:           nyan-interpolation-core
 version:        0.9
@@ -94,7 +94,6 @@ test-suite nyan-interpolation-core-tests
   other-modules:
       Test.Customization
       Test.Interpolator
-      Test.Lens
       Test.Parser
       Test.Processor
       Test.Util
