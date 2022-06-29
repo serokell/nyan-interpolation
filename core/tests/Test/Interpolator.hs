@@ -321,13 +321,20 @@ test_DefaultInterpolator = testGroup "Default interpolator"
               -}
           |] @?= " My text \n"
 
-      , testCase "Other switches keep the comments" do
-          [int|t|
+      , testCase "Line comments do not affect the indentation" do
+          [int|tc|
               The beginning
-              -- some comments in the middle
+            -- some comments in the middle
               The end
-          |] @?= "The beginning\n-- some comments in the middle\nThe end\n"
-      ]
+          |] @?= "  The beginning\n\n  The end\n"
+
+      , testCase "Block comments do not affect the indentation" do
+          [int|tc|
+              The beginning {- some clarifying
+              comments in the middle -}
+              The end
+          |] @?= "The beginning \nThe end\n"
+       ]
 
     ]
 
