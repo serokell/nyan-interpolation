@@ -219,7 +219,7 @@ Handle line comments starting with @--@ and/or block comments enclosed in @{- ..
 >>> :{
   [int|c|My {- this is a block comment -} text|]
 :}
-"My  text"
+"My text"
 
 ==== t (return [t]ext)
 

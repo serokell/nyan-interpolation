@@ -16,7 +16,8 @@ import qualified Data.Text as T
 import Fmt (Builder, build, fmt)
 import Text.Interpolation.Nyan.Core.Internal.Base
 import Text.Megaparsec (Parsec, customFailure, eof, errorBundlePretty, label, lookAhead, parse,
-                        single, takeWhile1P, takeWhileP)
+                        single, takeWhile1P, takeWhileP, try)
+import Text.Megaparsec.Char (spaceChar)
 import Text.Megaparsec.Char.Lexer (skipBlockComment, skipLineComment)
 import Text.Megaparsec.Error (ShowErrorComponent (..))
 
@@ -280,7 +281,7 @@ intPieceP SwitchesOptions{..} = asum [
 
     -- ignore comments if 'commenting' switch is on
     guard commenting *>
-      asum [ skipLineComment "--" , skipBlockComment "{-" "-}" ] $> []
+      asum [ skipLineComment "--", skipBlockComment' ] $> []
 
     -- consume normal text
   , one . PipString <$> takeWhile1P Nothing (notAnyOf [(== '\\'), (== '#'), isSpace])
@@ -329,6 +330,11 @@ intPieceP SwitchesOptions{..} = asum [
 
   ]
   where
+    skipBlockComment' = asum
+      [ skipBlockComment "{-" "-}"
+      , try $ spaceChar *> skipBlockComment "{-" "-}"
+      ]
+
     newline = PipNewline . mconcat <$> sequence
       [ maybe "" T.singleton <$> optional (single '\r')
       , T.singleton <$> single '\n'
