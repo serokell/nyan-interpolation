@@ -28,10 +28,12 @@ _AllFieldsAreExported =
             (error "")
             (error "")
             (error "")
+            (error "")
             -- ↑ if you change this, also add a field to the record below
       in basicDefaultSwitchesOptions
         { defIndentationStripping = Nothing
         , defSpacesTrimming = Nothing
+        , defCommenting = Nothing
         , defLeadingNewlineStripping = Nothing
         , defTrailingSpacesStripping = Nothing
         , defReducedNewlines = Nothing

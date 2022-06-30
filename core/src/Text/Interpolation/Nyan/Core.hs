@@ -33,6 +33,7 @@ module Text.Interpolation.Nyan.Core
   , recommendedDefaultSwitchesOptions
     -- ** Field accessors for default switches options
   , defSpacesTrimming
+  , defCommenting
   , defIndentationStripping
   , defLeadingNewlineStripping
   , defTrailingSpacesStripping
