@@ -28,19 +28,18 @@ test_makeLenses = testGroup "Lenses produced by 'makeLenses' work as expected"
             @?= (100, "Hundred")
 
       , testCase "(%~) operator works" do
-          pair & (firstL %~ (+ 1)) & (secondL %~ (<> " and one"))
+          (pair & firstL %~ (+ 1) & secondL %~ (<> " and one"))
             @?= Pair 101 "Hundred and one"
 
       , testCase "(.~) operator works" do
-          pair & (firstL .~ 102) & (secondL .~ "Hundred and two")
+          (pair & firstL .~ 102 & secondL .~ "Hundred and two")
             @?= Pair 102 "Hundred and two"
 
       , testCase "(?~) operator works" do
-          single & (valueL ?~ "Some value")
+          (single & (valueL ?~ "Some value"))
             @?= Single (Just "Some value")
       ]
   ]
   where
-    a & f = f a
     pair = Pair 100 "Hundred"
     single = Single Nothing
