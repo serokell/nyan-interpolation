@@ -10,6 +10,8 @@ import Data.Monoid (Endo (..))
 import Data.Text (Text)
 import Language.Haskell.TH (ExpQ)
 
+import Text.Interpolation.Nyan.Lens.TH (makeLenses)
+
 {- $setup
 
 > import Data.Text
@@ -93,6 +95,8 @@ data SwitchesOptions = SwitchesOptions
   , previewLevel            :: PreviewLevel
   } deriving stock (Show, Eq)
 
+makeLenses ''SwitchesOptions
+
 -- | Default switches options set in the interpolator, those that are used
 -- in @[int||...|]@.
 --
@@ -107,6 +111,8 @@ data DefaultSwitchesOptions = DefaultSwitchesOptions
   , defReturnType              :: Maybe ReturnType
   , defMonadic                 :: Maybe Bool
   } deriving stock (Show)
+
+makeLenses ''DefaultSwitchesOptions
 
 -- | Default 'DefaultSwitchesOptions'.
 --
@@ -175,3 +181,5 @@ data InterpolatorOptions = InterpolatorOptions
     -- with invisibles being marked specially (@!!@), how to update the pieces
     -- of text.
   }
+
+makeLenses ''InterpolatorOptions

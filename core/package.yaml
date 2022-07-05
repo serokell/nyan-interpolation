@@ -37,6 +37,7 @@ tests:
     <<: *test-common
     dependencies:
       - HUnit
+      - microlens
       - nyan-interpolation-core
       - tasty
       - tasty-hunit-compat

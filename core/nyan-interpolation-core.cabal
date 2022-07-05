@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 454835beb066a76fcd19ff1540bc89d3e2f2732ac9d7164ec5903d0eb782bebd
+-- hash: b1b8d611a66f25dbccb8daf33958e43e19b2e94cc24efcf0c9ce52e9e6d54e7f
 
 name:           nyan-interpolation-core
 version:        0.9
@@ -34,6 +34,7 @@ library
       Text.Interpolation.Nyan.Core.Internal.Processor
       Text.Interpolation.Nyan.Core.Internal.RMode
       Text.Interpolation.Nyan.Core.Internal.Splice
+      Text.Interpolation.Nyan.Lens.TH
       Text.Interpolation.Nyan.RModes.Buildable
       Text.Interpolation.Nyan.RModes.CommonExtra
       Text.Interpolation.Nyan.RModes.Show
@@ -91,6 +92,7 @@ test-suite nyan-interpolation-core-tests
   other-modules:
       Test.Customization
       Test.Interpolator
+      Test.Lens
       Test.Parser
       Test.Processor
       Test.Util
@@ -140,6 +142,7 @@ test-suite nyan-interpolation-core-tests
     , base <4.17
     , fmt
     , megaparsec
+    , microlens
     , mtl
     , nyan-interpolation-core
     , tasty
