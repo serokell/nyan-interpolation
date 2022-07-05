@@ -10,7 +10,7 @@ import Data.Monoid (Endo (..))
 import Data.Text (Text)
 import Language.Haskell.TH (ExpQ)
 
-import Text.Interpolation.Nyan.Lens (makeLenses)
+import Text.Interpolation.Nyan.Lens.TH (makeLenses)
 
 {- $setup
 

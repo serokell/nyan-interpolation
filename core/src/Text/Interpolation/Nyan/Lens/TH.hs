@@ -7,7 +7,7 @@ module Text.Interpolation.Nyan.Lens.TH
   )
   where
 
-import Control.Monad ((<=<))
+import Control.Monad (forM)
 import Language.Haskell.TH
 
 -- | Information about the record field the lenses will operate on.
@@ -15,7 +15,12 @@ type RecordFieldInfo = (Name, Strict, Type)
 
 -- | Given a record datatype, derives lenses for all of its fields.
 makeLenses :: Name -> Q [Dec]
-makeLenses = mapM deriveLens <=< extractRecordFields
+makeLenses datatype = do
+  fields <- extractRecordFields datatype
+  fmap concat $ forM fields \field -> do
+    sig <- deriveLensSignature datatype field
+    body <- deriveLensBody field
+    return [sig, body]
 
 extractRecordFields :: Name -> Q [RecordFieldInfo]
 extractRecordFields datatype = do
@@ -25,29 +30,41 @@ extractRecordFields datatype = do
     TyConI (DataD    _ _ _ _ [RecC _ fs] _) -> fs
     TyConI (NewtypeD _ _ _ _ (RecC _ fs) _) -> fs
     TyConI (DataD _ _ _ _ [_] _) ->
-      error $ "Can't derive lenses without record selectors: " ++ datatypeStr
+      fail $ "Can't derive lenses without record selectors: " ++ datatypeStr
     TyConI NewtypeD{} ->
-      error $ "Can't derive lenses without record selectors: " ++ datatypeStr
+      fail $ "Can't derive lenses without record selectors: " ++ datatypeStr
     TyConI TySynD{} ->
-      error $ "Can't derive lenses for type synonym: " ++ datatypeStr
+      fail $ "Can't derive lenses for type synonym: " ++ datatypeStr
     TyConI DataD{} ->
-      error $ "Can't derive lenses for a sum type: " ++ datatypeStr
+      fail $ "Can't derive lenses for a sum type: " ++ datatypeStr
     _ ->
-      error $ "Can't derive lenses for: "  ++ datatypeStr
+      fail $ "Can't derive lenses for: "  ++ datatypeStr
            ++ ", type name required."
+
+mkLensName :: Name -> Name
+mkLensName = mkName . (<> "L") . nameBase
+
+deriveLensSignature :: Name -> RecordFieldInfo -> Q Dec
+deriveLensSignature datatype (fieldName, _, fieldType) =
+  sigD (mkLensName fieldName)
+    [t|forall f. Functor f => ($field -> f $field)
+        -> $record -> f $record
+    |]
+  where
+    field = return fieldType
+    record = conT datatype
 
 -- | Given a record field name,
 -- produces a single function declaration:
 -- @lensName f a = (\x -> a { field = x }) `fmap` f (field a)@
-deriveLens :: RecordFieldInfo -> Q Dec
-deriveLens (fieldName, _, _) = funD lensName [defLine]
+deriveLensBody :: RecordFieldInfo -> Q Dec
+deriveLensBody (fieldName, _, _) = funD (mkLensName fieldName) [defLine]
   where
-    lensName = mkName $ (nameBase fieldName) <> "L"
     a = mkName "a"
     f = mkName "f"
     defLine = clause pats (normalB body) []
     pats = [varP f, varP a]
     body = [| (\x -> $(record a fieldName [|x|]))
-              `fmap` $(appE (varE f) (appE (varE fieldName) (varE a)))
+              `fmap` $(varE f `appE` (varE fieldName `appE` varE a))
            |]
     record rec fld val = val >>= \v -> recUpdE (varE rec) [return (fld, v)]

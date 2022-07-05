@@ -4,10 +4,11 @@
 
 module Test.Lens where
 
+import Lens.Micro
 import Test.Tasty (TestTree, testGroup)
 import Test.Tasty.HUnit (testCase, (@?=))
 
-import Text.Interpolation.Nyan.Lens
+import Text.Interpolation.Nyan.Lens.TH (makeLenses)
 
 data Pair = Pair { first :: Int, second :: String }
   deriving stock (Show, Eq)
@@ -36,20 +37,6 @@ test_makeLenses = testGroup "Lenses produced by 'makeLenses' work as expected"
 
       , testCase "(?~) operator works" do
           single & (valueL ?~ "Some value")
-            @?= Single (Just "Some value")
-      ]
-
-  , testGroup "Operators leveraging 'MonadState', 'State' work as expected"
-      [ testCase "(&~) and (.=) work" do
-          (pair &~ do firstL .= 102)
-            @?= Pair 102 "Hundred"
-
-      , testCase "(&~) and (?=) work" do
-          (single &~ do valueL ?= "Some value")
-            @?= Single (Just "Some value")
-
-      , testCase "(&~) and (%=) work" do
-          (single &~ do valueL %= (const $ Just "Some value"))
             @?= Single (Just "Some value")
       ]
   ]
