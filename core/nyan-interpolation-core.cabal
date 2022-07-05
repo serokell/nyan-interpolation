@@ -3,6 +3,8 @@ cabal-version: 2.0
 -- This file has been generated from package.yaml by hpack version 0.35.0.
 --
 -- see: https://github.com/sol/hpack
+--
+-- hash: b1b8d611a66f25dbccb8daf33958e43e19b2e94cc24efcf0c9ce52e9e6d54e7f
 
 name:           nyan-interpolation-core
 version:        0.9
