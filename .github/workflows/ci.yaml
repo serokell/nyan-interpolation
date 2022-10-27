@@ -31,15 +31,16 @@ jobs:
             experimental: true
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       if: github.event.action == 'opened' || github.event.action == 'synchronize' || github.event.ref == 'refs/heads/master'
 
-    - uses: haskell/actions/setup@v1.2
+    - uses: haskell/actions/setup@v2
       name: Setup Haskell Stack
       with:
         ghc-version: ${{ matrix.ghc }}
-
-    - uses: actions/cache@v1
+        enable-stack: true
+        
+    - uses: actions/cache@v3
       name: Cache ~/.stack
       with:
         path: ~/.stack
@@ -63,3 +64,12 @@ jobs:
     steps:
     - name: Check
       uses: fsfe/reuse-action@v1
+
+  xrefcheck:
+    name: Verify cross references
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: serokell/xrefcheck-action@v1
+      with:
+        xrefcheck-version: 0.2.2
