@@ -1,0 +1,14 @@
+# SPDX-FileCopyrightText: 2019-2021 Serokell <https://serokell.io>
+#
+# SPDX-License-Identifier: Unlicense
+
+verification:
+  ignoreRefs:
+    # Note: For some reason, running `curl -I https://opensource.org/licenses/MPL-2.0` from within
+    # a GitHub Action's agent returns a 503.
+    # For this reason, we're temporarily disabling this check.
+    - https://opensource.org/licenses/.*
+
+scanners:
+  markdown:
+    flavor: GitHub

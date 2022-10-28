@@ -23,7 +23,7 @@ If you report a bug, please provide steps to reproduce this bug and revision of 
 If you would like to contribute code to fix a bug, add a new feature, or
 otherwise improve our project, pull requests are most welcome.
 
-Our pull request template contains a [checklist](.github/pull_request_template.md#white_check_mark-checklist-for-your-pull-request) of acceptance criteria for your pull request.
+Our pull request template contains a [checklist](./pull_request_template.md#white_check_mark-checklist-for-your-pull-request) of acceptance criteria for your pull request.
 Please read it before you start contributing and make sure your contributions adhere to this checklist.
 
 
