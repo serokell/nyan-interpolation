@@ -207,6 +207,20 @@ In case monadic actions have side effects, they will be applied in the same orde
 in which placeholders appear in the quoter. /But you are not going to use this
 behaviour, don't you?/
 
+==== c ([c]omments handling)
+
+Handle line comments starting with @--@ and/or block comments enclosed in @{- ... -}@.
+
+>>> :{
+  [int|c|My text -- this is a line comment|]
+:}
+"My text "
+
+>>> :{
+  [int|c|My {- this is a block comment -} text|]
+:}
+"My text"
+
 ==== t (return [t]ext)
 
 The quoter will return concrete t'Text'.
@@ -272,6 +286,16 @@ affects indentation stripping to also ignore the line with @|]@:
 :}
 "\nValue 1 is 5, value 2 is 10\n"
 
+* Comments remain invisible for other switches and thus do not affect them.
+Consider the following indentation stripping example:
+
+>>> :{
+  [int|c|
+    The beginning
+-- some comments in the middle
+    The end|]
+:}
+"The beginning\n\nThe end"
 
 === Customizing the interpolator
 

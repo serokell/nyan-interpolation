@@ -297,6 +297,45 @@ test_DefaultInterpolator = testGroup "Default interpolator"
 
       ]
 
+      ----------------------------------
+    , testGroup "Commenting"
+
+      [ testCase "Basic comments" do
+          [int|tc|Abc -- this is a comment|]
+              @?= "Abc "
+
+      , testCase "Comments in arbitrary lines" do
+          [int|tc| -- comments at the beginning
+              My text -- comments in the middle
+              -- comments at the end
+          |] @?= " \nMy text \n\n"
+
+      , testCase "Inline block comments" do
+          [int|tc| My {- inline comment -} text
+          |] @?= " My text\n"
+
+      , testCase "Multiline block comments" do
+          [int|tc| My text {- multiline block
+              comments are fun,
+              aren't they?
+              -}
+          |] @?= " My text\n"
+
+      , testCase "Line comments do not affect the indentation" do
+          [int|tc|
+              The beginning
+            -- some comments in the middle
+              The end
+          |] @?= "  The beginning\n\n  The end\n"
+
+      , testCase "Block comments do not affect the indentation" do
+          [int|tc|
+              The beginning {- some clarifying
+           comments in the middle -}
+              The end
+          |] @?= "The beginning\nThe end\n"
+       ]
+
     ]
 
   ]

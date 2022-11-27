@@ -121,7 +121,7 @@ test_TextParser = testGroup "Main text parser"
 
 basicSwitchesOptions :: SwitchesOptions
 basicSwitchesOptions =
-  SwitchesOptions False False False False AnyFromBuilder False False PreviewNone
+  SwitchesOptions False False False False False AnyFromBuilder False False PreviewNone
 
 test_SwitchesParser :: TestTree
 test_SwitchesParser = testGroup "Switches parser"
