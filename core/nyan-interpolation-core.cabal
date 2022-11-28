@@ -7,7 +7,7 @@ cabal-version: 2.0
 -- hash: 454835beb066a76fcd19ff1540bc89d3e2f2732ac9d7164ec5903d0eb782bebd
 
 name:           nyan-interpolation-core
-version:        0.9
+version:        0.9.1
 synopsis:       Customize your nyan interpolator!
 description:    This package to tune up your own variation of interpolator. Declare new rendering modes, set desired switches defaults and more.
 category:       Interpolation, Text

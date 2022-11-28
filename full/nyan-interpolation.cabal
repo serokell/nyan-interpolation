@@ -7,7 +7,7 @@ cabal-version: 2.0
 -- hash: a77f2eae2cfd2c173f77963a2f6af54c0547b52b2841f478fa358fb6756a163c
 
 name:           nyan-interpolation
-version:        0.9
+version:        0.9.1
 synopsis:       Flexible production-scale string interpolation library
 description:    Interpolation library tuneable to your project and your best practices. It supports custom rendering (via Buildable, Show), numerious modification options (like spaces and indentation stripping), and more.
 category:       Interpolation, Text

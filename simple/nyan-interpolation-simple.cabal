@@ -7,7 +7,7 @@ cabal-version: 2.0
 -- hash: 3ec4653947d7d52aad6fc03fff069713840f6b334e560a138a0906d8b6b94155
 
 name:           nyan-interpolation-simple
-version:        0.9
+version:        0.9.1
 synopsis:       Simplified lightweight interpolation
 description:    This is a variation of 'nyan-interpolation' library that has no `haskell-src-exts` dependency, at the cost of not being able to interpolate arbitrary exressions, only variables.
 category:       Interpolation, Text
