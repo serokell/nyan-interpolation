@@ -25,6 +25,3 @@ cabal.project.local
 cabal.project.local~
 .HTF/
 .ghc.environment.*
-
-# Project-custom files
-stack-advanced-exts.yaml.lock

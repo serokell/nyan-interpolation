@@ -24,8 +24,6 @@ jobs:
           - "8.6.5"
         stack: [stack.yaml]
         include:
-          - ghc: "9.0.1"
-            stack: stack-advanced-exts.yaml
           - ghc: latest
             stack: stack.yaml
             experimental: true
@@ -39,7 +37,7 @@ jobs:
       with:
         ghc-version: ${{ matrix.ghc }}
         enable-stack: true
-        
+
     - uses: actions/cache@v3
       name: Cache ~/.stack
       with:
