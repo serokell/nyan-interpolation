@@ -1,10 +1,8 @@
 cabal-version: 2.0
 
--- This file has been generated from package.yaml by hpack version 0.35.0.
+-- This file has been generated from package.yaml by hpack version 0.34.4.
 --
 -- see: https://github.com/sol/hpack
---
--- hash: 3ec4653947d7d52aad6fc03fff069713840f6b334e560a138a0906d8b6b94155
 
 name:           nyan-interpolation-simple
 version:        0.9
@@ -65,7 +63,7 @@ library
       TypeApplications
       TypeOperators
       QuasiQuotes
-  ghc-options: -Weverything -Wno-missing-export-lists -Wno-missing-exported-signatures -Wno-missing-import-lists -Wno-missed-specialisations -Wno-all-missed-specialisations -Wno-unsafe -Wno-safe -Wno-missing-local-signatures -Wno-monomorphism-restriction -Wno-implicit-prelude -Wno-prepositive-qualified-module -Wno-missing-safe-haskell-mode -Wno-unused-packages
+  ghc-options: -Weverything -Wno-missing-export-lists -Wno-missing-exported-signatures -Wno-missing-import-lists -Wno-missing-kind-signatures -Wno-missed-specialisations -Wno-all-missed-specialisations -Wno-unsafe -Wno-safe -Wno-missing-local-signatures -Wno-monomorphism-restriction -Wno-implicit-prelude -Wno-prepositive-qualified-module -Wno-missing-safe-haskell-mode -Wno-unused-packages
   build-depends:
       base <4.17
     , nyan-interpolation-core

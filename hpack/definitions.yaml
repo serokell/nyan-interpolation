@@ -54,6 +54,7 @@ _definitions:
       - -Wno-missing-export-lists
       - -Wno-missing-exported-signatures
       - -Wno-missing-import-lists
+      - -Wno-missing-kind-signatures
       - -Wno-missed-specialisations
       - -Wno-all-missed-specialisations
       - -Wno-unsafe
