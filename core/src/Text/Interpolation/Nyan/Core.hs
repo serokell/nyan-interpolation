@@ -74,7 +74,7 @@ mkInt iopts = TH.QuasiQuoter
   { TH.quoteExp = \s -> do
       (sopts, sint) <-
         either fail pure $
-        parseIntString (defaultSwitchesOptions iopts) (T.pack s)
+        parseIntString (defaultSwitchesOptions iopts) (useUnixLineEndings $ T.pack s)
       let sint' = processIntString sopts sint
       intSplice iopts (sopts, sint')
   , TH.quotePat = \_ ->
@@ -84,6 +84,11 @@ mkInt iopts = TH.QuasiQuoter
   , TH.quoteDec = \_ ->
       fail "Cannot interpolate at declaration position"
   }
+  where
+    -- as in https://github.com/serokell/nyan-interpolation/issues/21,
+    -- we should use LF line endings even when source file has CRLF
+    useUnixLineEndings :: T.Text -> T.Text
+    useUnixLineEndings = T.replace "\r\n" "\n"
 
 -- | The most interpolator options.
 --

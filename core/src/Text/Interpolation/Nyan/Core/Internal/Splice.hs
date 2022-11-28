@@ -159,10 +159,6 @@ simpleInvisibleCharsPreview = InvisibleCharsPreview go
     go = \case
       ' ' : s ->
         '·' : go s
-      '\r' : '\n' : s ->
-        '⤶' : '\r' : '\n' : go s
-      '\r' : s      ->
-        '⤶' : '\r' : go s
       '\n' : s        ->
         '⤶' : '\n' : go s
 

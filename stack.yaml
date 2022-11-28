@@ -1,7 +1,7 @@
 # Note: when updating this file, you may also need
 # to update other stack-*.yaml files.
 
-resolver: lts-18.10
+resolver: lts-19.33
 
 packages:
   - core
