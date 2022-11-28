@@ -4,7 +4,7 @@
 
 module Text.Interpolation.Nyan.Core.Internal.Parser where
 
-import Control.Applicative (many, optional)
+import Control.Applicative (many)
 import Control.Monad (guard, when, (<=<))
 import Control.Monad.State (MonadState, execStateT, get, put)
 import Data.Bifunctor (first)
@@ -304,11 +304,9 @@ intPieceP = asum
 
   ]
   where
-    newline = PipNewline . mconcat <$> sequence
-      [ maybe "" T.singleton <$> optional (single '\r')
-      , T.singleton <$> single '\n'
-      ]
-    isNonNewlineSpace c = isSpace c && c /= '\n' && c /= '\r'
+    newline = PipNewline . T.singleton <$> single '\n'
+
+    isNonNewlineSpace c = isSpace c && c /= '\n'
 
     -- Parse indentation
     lineStart = asum
