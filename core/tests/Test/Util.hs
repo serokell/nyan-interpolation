@@ -2,6 +2,8 @@
 --
 -- SPDX-License-Identifier: MPL-2.0
 
+{-# LANGUAGE CPP #-}
+
 module Test.Util where
 
 import Control.Monad (guard)
@@ -91,6 +93,10 @@ instance Quasi TestQ where
   qAddCorePlugin a = liftToTestQ $ qAddCorePlugin a
   qGetQ = liftToTestQ qGetQ
   qPutQ a = liftToTestQ $ qPutQ a
+#if MIN_VERSION_template_haskell(2,18,0)
+  qGetDoc d = liftToTestQ $ qGetDoc d
+  qPutDoc d s = liftToTestQ $ qPutDoc d s
+#endif
 
 -- * Interpolators
 
