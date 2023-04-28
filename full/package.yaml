@@ -24,6 +24,7 @@ dependencies:
   - haskell-src-exts
   - haskell-src-meta
   - nyan-interpolation-core
+  - spoon
   - template-haskell
   - text
 

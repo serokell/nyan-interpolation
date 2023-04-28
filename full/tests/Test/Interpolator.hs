@@ -31,4 +31,11 @@ test_DefaultInterpolator = testGroup "Default interpolator"
       [int|t|#d{succ . succ $ 5 + 7 `div` 2}|]
         @?= "10"
 
+  , -- We want to ensure that at least basic extensions work in the interpolator
+    testGroup "Code with extensions works"
+    [ testCase "TypeApplications works" do
+        [int|t|#{id @Int 1}|]
+          @?= "1"
+    ]
+
   ]
