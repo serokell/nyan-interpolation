@@ -19,6 +19,9 @@ import Language.Haskell.Meta.Syntax.Translate (toExp)
 import Language.Haskell.TH (extsEnabled)
 
 #if MIN_VERSION_haskell_src_meta(0,8,9)
+import Control.Exception (Handler (..), PatternMatchFail (..))
+import Control.Monad (join)
+import Control.Spoon (teaspoonWithHandles)
 import Data.Maybe (mapMaybe)
 import Language.Haskell.Exts.Extension (Extension (..), Language (..))
 import Language.Haskell.Exts.Parser (baseLanguage)
@@ -38,7 +41,11 @@ Known issues:
   for the interpolated values.
   With the modern version of @haskell-src-meta@, we do our best to be trasparent
   and pick the extensions enabled in the module where interpolator is called
-  (some rare extensions may still be unsupported).
+  (some rare extensions may still be unsupported since they are not represented
+  in @haskell-src-exts@ or in @template-haskell@ packages).
+
+* Some very modern extensions might be not allowed; if you face such issue,
+  try using the most recent version of @haskell-src-meta@.
 
 -}
 fullHaskellValueInterpolator :: ValueInterpolator
@@ -61,7 +68,18 @@ fullHaskellValueInterpolator = ValueInterpolator $ \txt -> do
   where
     providedExtensions =
 #if MIN_VERSION_haskell_src_meta(0,8,9)
-      map EnableExtension . mapMaybe fromExtension
+      -- There is a period of time when fromExtension didn't handle
+      -- some cases in its pattern match.
+      -- See https://github.com/haskell-party/haskell-src-meta/issues/40
+      --
+      -- If some extension is unknown to it, we will just pretend it
+      -- does not exist.
+      let fromExtensionSafe ext =
+            join . teaspoonWithHandles
+              [Handler \(_ :: PatternMatchFail) -> pure Nothing] $
+              fromExtension ext
+
+      in map EnableExtension . mapMaybe fromExtensionSafe
 #else
       -- There is no easy way to do the conversion between template-haskell's
       -- and haskell-src-exts's Extension types, so using only language-default
