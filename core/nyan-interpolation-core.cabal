@@ -4,7 +4,7 @@ cabal-version: 2.0
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 454835beb066a76fcd19ff1540bc89d3e2f2732ac9d7164ec5903d0eb782bebd
+-- hash: 7535f9131d6ab7bbd2900d506b99e84497f049250fb16404b901cd224014a729
 
 name:           nyan-interpolation-core
 version:        0.9.1
@@ -30,10 +30,13 @@ library
   exposed-modules:
       Text.Interpolation.Nyan.Core
       Text.Interpolation.Nyan.Core.Internal.Base
+      Text.Interpolation.Nyan.Core.Internal.Base.Lens
       Text.Interpolation.Nyan.Core.Internal.Parser
       Text.Interpolation.Nyan.Core.Internal.Processor
       Text.Interpolation.Nyan.Core.Internal.RMode
       Text.Interpolation.Nyan.Core.Internal.Splice
+      Text.Interpolation.Nyan.Lens
+      Text.Interpolation.Nyan.Lens.Type
       Text.Interpolation.Nyan.RModes.Buildable
       Text.Interpolation.Nyan.RModes.CommonExtra
       Text.Interpolation.Nyan.RModes.Show
