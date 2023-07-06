@@ -19,7 +19,7 @@ default-extensions: *default-extensions
 ghc-options: *ghc-options
 
 dependencies:
-  - base <4.17
+  - base <4.19
   - fmt
   - megaparsec
   - mtl
