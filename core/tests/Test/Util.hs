@@ -91,6 +91,9 @@ instance Quasi TestQ where
   qAddCorePlugin a = liftToTestQ $ qAddCorePlugin a
   qGetQ = liftToTestQ qGetQ
   qPutQ a = liftToTestQ $ qPutQ a
+  qGetDoc a = liftToTestQ $ qGetDoc a
+  qPutDoc a b = liftToTestQ $ qPutDoc a b
+  qGetPackageRoot = liftToTestQ $ qGetPackageRoot
 
 -- * Interpolators
 

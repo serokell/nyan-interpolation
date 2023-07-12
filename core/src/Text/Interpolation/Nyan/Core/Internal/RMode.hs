@@ -6,6 +6,7 @@ module Text.Interpolation.Nyan.Core.Internal.RMode
   ( RMode(..)
   ) where
 
+import Data.Kind (Type)
 import Fmt (Builder)
 
 {- | Type that describes rendering modes.
@@ -30,4 +31,5 @@ More precisely, any @#xxx{expr}@ in interpolator will be expanded to
 "Value is 0x20"
 
 -}
+type RMode :: Type -> Type
 newtype RMode a = RMode { renderWithMode :: a -> Builder }

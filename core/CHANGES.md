@@ -7,6 +7,10 @@
 # Unreleased
 
 
+# 0.9.2
+
+* Bump upper bound on `base` to <4.19.
+
 # 0.9.1
 
 * Bump upper bound on `base` to <4.17.

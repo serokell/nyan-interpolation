@@ -1,13 +1,11 @@
 cabal-version: 2.0
 
--- This file has been generated from package.yaml by hpack version 0.35.0.
+-- This file has been generated from package.yaml by hpack version 0.35.1.
 --
 -- see: https://github.com/sol/hpack
---
--- hash: 454835beb066a76fcd19ff1540bc89d3e2f2732ac9d7164ec5903d0eb782bebd
 
 name:           nyan-interpolation-core
-version:        0.9.1
+version:        0.9.2
 synopsis:       Customize your nyan interpolator!
 description:    This package to tune up your own variation of interpolator. Declare new rendering modes, set desired switches defaults and more.
 category:       Interpolation, Text
@@ -66,6 +64,7 @@ library
       RecordWildCards
       ScopedTypeVariables
       StandaloneDeriving
+      StandaloneKindSignatures
       TemplateHaskell
       TupleSections
       TypeFamilies
@@ -74,9 +73,9 @@ library
       TypeApplications
       TypeOperators
       QuasiQuotes
-  ghc-options: -Weverything -Wno-missing-export-lists -Wno-missing-exported-signatures -Wno-missing-import-lists -Wno-missed-specialisations -Wno-all-missed-specialisations -Wno-unsafe -Wno-safe -Wno-missing-local-signatures -Wno-monomorphism-restriction -Wno-implicit-prelude -Wno-prepositive-qualified-module -Wno-missing-safe-haskell-mode -Wno-unused-packages
+  ghc-options: -Weverything -Wno-missing-export-lists -Wno-missing-exported-signatures -Wno-missing-import-lists -Wno-missing-kind-signatures -Wno-missed-specialisations -Wno-all-missed-specialisations -Wno-unsafe -Wno-safe -Wno-missing-local-signatures -Wno-monomorphism-restriction -Wno-implicit-prelude -Wno-prepositive-qualified-module -Wno-missing-safe-haskell-mode -Wno-unused-packages
   build-depends:
-      base <4.17
+      base <4.19
     , fmt
     , megaparsec
     , mtl
@@ -124,6 +123,7 @@ test-suite nyan-interpolation-core-tests
       RecordWildCards
       ScopedTypeVariables
       StandaloneDeriving
+      StandaloneKindSignatures
       TemplateHaskell
       TupleSections
       TypeFamilies
@@ -132,12 +132,12 @@ test-suite nyan-interpolation-core-tests
       TypeApplications
       TypeOperators
       QuasiQuotes
-  ghc-options: -Weverything -Wno-missing-export-lists -Wno-missing-exported-signatures -Wno-missing-import-lists -Wno-missed-specialisations -Wno-all-missed-specialisations -Wno-unsafe -Wno-safe -Wno-missing-local-signatures -Wno-monomorphism-restriction -Wno-implicit-prelude -Wno-prepositive-qualified-module -Wno-missing-safe-haskell-mode -Wno-unused-packages
+  ghc-options: -Weverything -Wno-missing-export-lists -Wno-missing-exported-signatures -Wno-missing-import-lists -Wno-missing-kind-signatures -Wno-missed-specialisations -Wno-all-missed-specialisations -Wno-unsafe -Wno-safe -Wno-missing-local-signatures -Wno-monomorphism-restriction -Wno-implicit-prelude -Wno-prepositive-qualified-module -Wno-missing-safe-haskell-mode -Wno-unused-packages
   build-tool-depends:
       tasty-discover:tasty-discover
   build-depends:
       HUnit
-    , base <4.17
+    , base <4.19
     , fmt
     , megaparsec
     , mtl
