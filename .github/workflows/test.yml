@@ -13,9 +13,9 @@ jobs:
         id: nightly
         run: |
           # get the latest nightly resolver
-          resolver=$(curl -Ls -o /dev/null -w %{urle.path} https://www.stackage.org/nightly | sed "s/\///")
+          resolver=$(curl -s -w %{redirect_url} https://www.stackage.org/nightly | sed 's:.*/::')
           echo "resolver=$resolver" >> $GITHUB_OUTPUT
-          nix develop .#ci -c stack build --resolver $resolver
+          stack build --resolver $resolver
 
   report-failure:
     runs-on: ubuntu-latest
