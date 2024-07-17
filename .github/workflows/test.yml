@@ -1,0 +1,41 @@
+on:
+  push:
+
+jobs:
+  check-nightly:
+    runs-on: ubuntu-latest
+    outputs:
+      resolver: ${{ steps.nightly.outputs.resolver }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: build with nightly
+        id: nightly
+        run: |
+          # get the latest nightly resolver
+          resolver=$(curl -Ls -o /dev/null -w %{urle.path} https://www.stackage.org/nightly | sed "s/\///")
+          echo "resolver=$resolver" >> $GITHUB_OUTPUT
+          nix develop .#ci -c stack build --resolver $resolver
+
+  report-failure:
+    runs-on: ubuntu-latest
+    if: failure()
+    needs: check-nightly
+    steps:
+      - uses: actions/checkout@v4
+      - uses: haskell-actions/setup@v2
+        with:
+          enable-stack: true
+          stack-version: 'latest'
+
+      - name: Report outdated haskell dependencies
+        env:
+          RESOLVER: ${{ needs.check-nightly.outputs.resolver }}
+        run: |
+          echo ${{ env.SLACK_TOKEN }}
+          # you can change 'libraries' to the channel dedicated to the library, if there is one
+          # in order for a bot to be able to post messages, it must be added to the appropriate channel
+          curl -XPOST https://slack.com/api/chat.postMessage \
+            -H "Authorization: Bearer ${{ env.SLACK_TOKEN }}" \
+            -d "channel=libraries" \
+            -d "text=Repository https://github.com/${{ github.repository }} failed to build with latest nightly resolver ($RESOLVER)."
