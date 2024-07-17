@@ -28,7 +28,7 @@ jobs:
           enable-stack: true
           stack-version: 'latest'
 
-      - name: Report outdated haskell dependencies
+      - name: Report build failure
         env:
           RESOLVER: ${{ needs.check-nightly.outputs.resolver }}
         run: |
