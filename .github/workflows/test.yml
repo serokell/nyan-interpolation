@@ -23,10 +23,6 @@ jobs:
     needs: check-nightly
     steps:
       - uses: actions/checkout@v4
-      - uses: haskell-actions/setup@v2
-        with:
-          enable-stack: true
-          stack-version: 'latest'
 
       - name: Report build failure
         env:
