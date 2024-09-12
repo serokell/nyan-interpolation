@@ -26,12 +26,10 @@ jobs:
 
       - name: Report build failure
         env:
-          RESOLVER: ${{ needs.check-nightly.outputs.resolver }}
-        run: |
-          ./slack-send-message.sh
-        env:
           SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }
           # you can change 'libraries' to the channel dedicated to the library, if there is one
           # in order for a bot to be able to post messages, it must be added to the appropriate channel
           SLACK_CHANNEL: "libraries"
-          MESSAGE: "Repository https://github.com/${{ github.repository }} failed to build with latest nightly resolver ($RESOLVER)."
+          MESSAGE: "Repository https://github.com/${{ github.repository }} failed to build with latest nightly resolver (${{ needs.check-nightly.outputs.resolver }})."
+        run: |
+          ./slack-send-message.sh
