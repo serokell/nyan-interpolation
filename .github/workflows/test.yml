@@ -4,18 +4,13 @@ on:
 jobs:
   check-nightly:
     runs-on: ubuntu-latest
-    outputs:
-      resolver: ${{ steps.nightly.outputs.resolver }}
     steps:
       - uses: actions/checkout@v4
 
       - name: build with nightly
         id: nightly
         run: |
-          # get the latest nightly resolver
-          resolver=$(curl -s -w %{redirect_url} https://www.stackage.org/nightly | sed 's:.*/::')
-          echo "resolver=$resolver" >> $GITHUB_OUTPUT
-          stack build --resolver $resolver
+          stack build --resolver nightly
 
   report-failure:
     runs-on: ubuntu-latest
@@ -30,6 +25,6 @@ jobs:
           # you can change 'libraries' to the channel dedicated to the library, if there is one
           # in order for a bot to be able to post messages, it must be added to the appropriate channel
           SLACK_CHANNEL: "libraries"
-          MESSAGE: "Repository https://github.com/${{ github.repository }} failed to build with latest nightly resolver (${{ needs.check-nightly.outputs.resolver }})."
+          MESSAGE: "Repository https://github.com/${{ github.repository }} failed to build with latest nightly resolver."
         run: |
           ./slack-send-message.sh
